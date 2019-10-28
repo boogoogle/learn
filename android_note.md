@@ -169,7 +169,45 @@
     - setCancelable(true), 如果设置为false,则无法通过Back键关闭,需要手动关闭
     - progressDialg.dismiss() 关闭对话框
 
+
 ### 布局
+  - LinearLayout 线性布局
+    - orientation: 
+      - vertical(竖直), 
+      - horizontal(水平方向, 默认)
+    - layout_gravity 空间在布局中的对其方式
+    - layout_weight 使用比例的方式指定空间的阿晓
+      - 使用weight需要把使用者的layout_width="0dp",*dp单位不能丢!*不然会有一个默认最小宽度
+  - RelativeLayout 相对布局
+    - 相对于*父元素*布局
+      - layout_alignParentLeft
+      - layout_alignParentRight
+      - layout_alignParentTop
+      - layout_alignParentBottom
+      - layout_alignCenterInParent
+    - 相对于*特定控件*布局
+      - layout_above / layout_below
+        - layout_toLeftOf
+        - layout_toRightOf
+      - layout_alignRight 一个控件的右边缘对其另一个控件的右边缘
+      - layout_alignBottom="@id/xxxx"
+      - layout_alignLeft
+      - layout_alignRight
+    - 帧布局 FrameLayout 应用场景少,碎片的时候会用
+    - 百分比布局
+
+### 自定义控件
+  - 只引入布局
+    - 可以直接通过include引入
+  - 通过集成LinearLayout或者其他控件的 Inflater实现
+    - 引入
+        ```
+        <com.example.uiwidgettest.TitleLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"/>`
+
+         
+### ListView
 
   
         
