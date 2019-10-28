@@ -512,7 +512,7 @@ public static void functionName(){
 
 ### 四种权限修饰符
   - public
-  - protected 
+  - protected 自身,子类以及同一个包种类可以访问
   - (default)并不是关键字, 而是根本不写
   - private    只能在类中,或者通过实例可以访问
 
