@@ -1,0 +1,10 @@
+```
+CREATE TABLE USER(
+    - 主键自增
+     id INT PRIMARY KEY AUTO_INCREMENT,
+	 NAME VARCHAR(32),
+	 PASSWORD VARCHAR(32)
+);
+
+INSERT INTO USER VALUES(NULL, "zhangsan", "123"), (NULL, "lisi","234");
+```

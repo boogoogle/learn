@@ -335,10 +335,10 @@ public static void functionName(){
   - 如果要向ArrayList总添加基本类型,必须使用基本类型的"包装类"
 
   - 常用方法
-    - public boolean add(E e) 添加 E是泛型标记; 对于ArrayList,添加操作一定成功,其他集合就不一定了
-    - public E get(int index) 读取
-    - public E remove(int index) 删除
-    - public int size() 获取集合长度
+    - `public boolean add(E e)` 添加 E是泛型标记; 对于ArrayList,添加操作一定成功,其他集合就不一定了
+    - `public E get(int index)` 读取
+    - `public E remove(int index)` 删除
+    - `public int size()` 获取集合长度
 
   - 包装类
     - byte    Byte
@@ -512,12 +512,12 @@ public static void functionName(){
 
 ### 四种权限修饰符
   - public
-  - protected 自身,子类以及同一个包种类可以访问
-  - (default)并不是关键字, 而是根本不写
+  - protected 自身,子类以及同一个包中类可以访问
+  - (default)并不是关键字, 而是根本什么都不写
   - private    只能在类中,或者通过实例可以访问
 
 ### 内部类
-  - 成员内部类 Body$Heart.class
+  - 成员内部类 Body$Heart.class, 和成员方法/成员变量定义在同一个层级下
     - 使用: 
       - 1. 间接使用: 通过外部类对象,调用外部类的方法,在方法里面间接使用内部类方法
       - 2. 直接使用: 对象名 = new 类名称(); 外部类名称.内部类名称 对象名 = new 外部类名称().new 内部类名称()
@@ -583,6 +583,21 @@ public static void functionName(){
 ### 字节和编码
 - utf-8中3个字节是一个中文,gbk中两个字节是一个中文
 
+
+
+## 属性集
+### Properties类
+- java.util.Properties类,继承自HashTable,标识一个持久的属性集
+- 唯一和io流结合的集合,可以保存在流中加载
+  - load
+  - store
+
+- 获取src路径下的文件的方式 --> ClassLoader 类加载器
+- 
+            ClassLoader cl = JDBCUtils.class.getClassLoader();  // 当前的类加载器
+            URL res = cl.getResource("jdbc.properties");        // 当前类下面某个文件的资源定位
+            String path = ((URL) res).getPath();   // 拿到path,是绝对路径           
+            System.out.println(path);
 
 
 

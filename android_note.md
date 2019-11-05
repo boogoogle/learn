@@ -206,8 +206,76 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"/>`
 
-         
-### ListView
 
+### ListView
+  - 数组中的数据无法直接传递给ListView,需要使用适配器
+  - ArrayAdapter: 
+    - 通过泛型来指定要适配的数据类型,然后在构造函数中把要适配的数据传入
+    - 它有多个构造函数的重载,注意根据实际情况选择使用
+  - `android.R.layout.support_simple_spinner_dropdown_item` 是安卓的内置布局文件,只有一个TextView
+  - 最后调用ListView 的setAdapter()方法,将构件号的适配器对象传入
+  - 问题
+    - 每次有新的item进入视野,getView方法都会被调用,从而调用布局文件并渲染,快速滚动时,会影响性能
+    - 解决: convertView用于将之前加载好的布局进行缓存,可以重用布局
+
+### RecyclerView
+
+
+
+
+
+### Android Adapter
+  - BaseAdapter
+  - ArrayAdapter
+
+
+
+
+
+
+
+### 常用API
+  - `LayoutInflater.from(getContext()).inflate(resourceId, parent, false);`
+    - LayoutInflater的from方法构建一个LayoutInflater对象,
+    - 然后调用inflate方法动态静态一个布局文件
+    - 第二个参数是给加载好的布局再添加一个父布局
+    - 第三个参数false的意思是: 不为新View添加父布局(但是第二个参数必须写?)
+    - inflater 充气者,增压泵, inflation膨胀,通货膨胀 
+  - View
+    - `setTag()`
+    - `getTag()`
+  - Toast
+    - `Toast.makeText(LayoutActivity.this, "bbbbb", Toast.LENGTH_SHORT)                  .show();`
+
+
+### 注意问题
+  - androidx 是对过去 support包的一层封装  [参考:你好,androidX！再见,android.support](https://www.jianshu.com/p/41de8689615d)
+
+
+
+### Nine-Patch 图片
+
+
+
+
+## 第四章, 手机平板兼容 -- 探索碎片
+  - 暂时用不到,以后再看
+
+## 第五章 广播机智
+### 简介
+  - 类型:
+    - 标准广播(Normal broadcasts) 
+      - 完全异步执行,
+      - 广播发出后,所有接收器都会在同一时刻接受,没有先后顺序可言
+    - 有序广播
+      - 同步执行
+      - 同一时刻只能有一个广播接收器收到这条广播消息.依次传递
+  - 
+
+
+
+
+## 第九章: 使用网络技术
+  - OkHttp
   
         
