@@ -262,6 +262,7 @@ public static void functionName(){
 7. shift + cmd + enter 自动补全分号;
 8. ^ + n, generator代码
 9. cmd + p 调出方法的传参
+10. iter 自动补全遍历list的代码
 
 
 ### 其他
@@ -612,9 +613,15 @@ public static void functionName(){
     - 3.调用JdbcTemplate的方法来完成crud操作
       - update()  dml语句, 增删改
       - queryForMap 查询结果并封装为Map集合
+        - 只能查询一条记录,多的话会报错
       - queryForList() 查询结果并封装为List集合
+        - 将每一条记录封装成Map集合,再吧Map封装成一个List
       - query()  查询结果,将结果封装为JavaBean对象
+        - 参数里面有RowMap,一般使用BeanPropertyRowMapper, 它会完成数据到JavaBean的自动装换
+        - new BeanPropertyRowMapper<类型>(类型.class)
+        - 它会看数据里的字段名和传入的类型中的字段名是否匹配,并自动赋值
       - queryForObject 查询结果,将结果封装成对象
+        - 执行聚合函数
 
 
 
