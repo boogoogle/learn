@@ -156,6 +156,8 @@ Tomcat 是Servlet容器
     - `req.getServletContext()`
 
 
+bookmark
+
 
 =========== p702停止了,回去看数据库相关
 
@@ -259,6 +261,7 @@ public static void functionName(){
 6. shift + enter 下一行开始输入
 7. shift + cmd + enter 自动补全分号;
 8. ^ + n, generator代码
+9. cmd + p 调出方法的传参
 
 
 ### 其他
@@ -599,7 +602,19 @@ public static void functionName(){
             String path = ((URL) res).getPath();   // 拿到path,是绝对路径           
             System.out.println(path);
 
-
+### Spring JDBC
+  - Spring框架对JDBC的简单封装,提供了一个JDBCTemplate对象简化JDBC的开发
+  - 步骤
+    - 1. 导入jar包
+      - 
+    - 2. 创建JDBCTemplate对象,依赖于数据源 DataSource
+        - `JdbcTemplate template = new JdbcTemplate(ds)`
+    - 3.调用JdbcTemplate的方法来完成crud操作
+      - update()  dml语句, 增删改
+      - queryForMap 查询结果并封装为Map集合
+      - queryForList() 查询结果并封装为List集合
+      - query()  查询结果,将结果封装为JavaBean对象
+      - queryForObject 查询结果,将结果封装成对象
 
 
 
@@ -772,3 +787,6 @@ public interface MyFunctionalInterface {
 -  maven3.6.2有问题,降级为3.6.1
 -  jdk1.8对应java8,与之对应的tomcat9.x
 -  maven3.6.1中默认的tomcat是6.x,对于java8的版本不匹配,会报一些莫名的错误
+-  导入jar包
+   -  1. 把jar包复制到libs目录下
+   -  2. 在idea中,选中 -- add as library
