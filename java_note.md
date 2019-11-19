@@ -132,7 +132,7 @@ Tomcat 是Servlet容器
       - 常用 `String getParameter(String name)` 根据参数名称获取参数值, 例如 getParameter("username")
       - `String getParameterValues(String name)` 根据参数名称获取参数值的数组 例如hobby=xx&happy=game
       - `Enumeration<String> getParameterNames()` 获取所有请求参数的名称的枚举
-      - 常用 `Map<String, String[]> getParamaterMap` 获取所有参数的集合
+      - *常用* `Map<String, String[]> getParamaterMap` 获取所有参数的集合
     - 中文乱码问题
       - 1. get请求, tomcat已经处理了
       - 2. post请求, 在取参数前 添加 `request.setCharacterEncoding("utf-8)`
@@ -765,6 +765,30 @@ public interface MyFunctionalInterface {
 	
 
 
+### 登录案例
+  - login.html
+  - LoginServlet
+    - 获取username和password
+    - 将username&password封装成一个User对象,调用UserDao中的login方法查询,获取返回值User对象
+    - 判断user是否是null, 是则登录失败,否则是登录成功,转到SuccessServlet
+  - UserDao 操作数据库的类
+  - 
+#### BeamUtils 简化操作
+  - 用于封装JavaBean的
+  1. JavaBean: 标准的Java类
+     - 要求
+       - 类必须被public修饰
+       - 必须提供*空参*的构造器
+       - 成员变量必须使用private修饰
+       - 提供公共的getter/setter方法
+     - 功能: 封装数据
+  2. 概念
+     - 成员变量: 
+     - 属性: setter/getter方法截取后的产物 例如: getName -> Name -> name
+  3. 方法
+     - getProperty()
+     - setProperty(Class, key, value)
+     - populate(Object obj, Map map) 将Map集合的键值对信息,封装到对应的JavaBean 对象中
 
 
 
