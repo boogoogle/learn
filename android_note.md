@@ -195,6 +195,10 @@
       - layout_alignRight
     - 帧布局 FrameLayout 应用场景少,碎片的时候会用
     - 百分比布局
+    - ConstraintLayout
+      - [ConstraintLayout性能优势](https://mp.weixin.qq.com/s/gGR2itbY7hh9fo61SxaMQQ)
+      - [ConstraintLayout使用](https://blog.csdn.net/guolin_blog/article/details/53122387)
+
 
 ### 自定义控件
   - 只引入布局
@@ -277,5 +281,12 @@
 
 ## 第九章: 使用网络技术
   - OkHttp
+
+  - 问题
+    - 0. 首先要开启权限 `<uses-permission android:name=“android.permission.INTERNET”/>`
+    - 1. 需要使用本地电脑的局域网ip,不能用localhost or 127.0.0.1
+    - 2. *不允许在主线程*中访问网络,不然会报错`
+      - at android.os.StrictMode$AndroidBlockGuardPolicy.onNetwork`
+    - 
   
         

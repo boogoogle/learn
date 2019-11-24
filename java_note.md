@@ -156,13 +156,130 @@ Tomcat 是Servlet容器
     - `req.getServletContext()`
 
 
-bookmark
+
+#### Response 对象
+  - 数据格式:
+    - 响应行 HTTP/1.1 200 OK
+      - 协议 / 版本 响应状态码 状态码描述
+      - 状态码
+        - 1xx, 服务器接收到客户端消息,但是没有接收完成,等待一段时间后,发送1xx状态码
+        - 2xx, 3xx, 4xx, 5xx
+    - 响应头
+      - 格式: key: value
+      - Content-Type: 服务器本次响应的数据体格式(text/html)和编码格式(charset=utf-8)
+      - Content-Length: 字节长度
+      - Content-dispoition: 告诉客户端以什么格式打开响应体
+        - 默认: in-line 在当前页面打开
+        - attachment: 以附件形式打开响应体, 文件下载 
+    - 响应空行
+    - 响应体 html页面内容或者json等
+  - 功能: 设置响应消息
+    - 1. 设置响应行
+      - 格式 HTTP/1.1 200 OK
+      - 设置状态码: setStatus(int sc)
+    - 2. 设置响应头
+      - setHeader
+    - 3. 设置响应体
+      - 获取输出流
+        - 字符输出流 PrintWriter getWriter()
+        - 字节输出流 ServletOutputStream getOutputStream()
+      - 使用输出流将数据输出到客户端
+  - 中文编码问题
+    - 告诉浏览器响应体的编码
+    - `resp.setHeader("Content-type", "text/html;charset=utf-8");`
+    - `resp.setContentType("utf-8");` *必须用在获取流之前!!!*
+        
 
 
-=========== p702停止了,回去看数据库相关
+### 案例:
+  - 重定向
+    - `resp.setStatus(302);
+        resp.setHeader("location","/maven_web/resDemo2");`
+    - `resp.sendRedirect("/maven_web/resDemo2")`  相当于封装了上面的两行代码'
+  - 重定向的特点
+    - 转发(forward)的特点: 
+      - 转发地址栏路径不变; 
+      - 转发只能访问当前服务器下的资源,
+      - 转发是一次请求
+    - 重定向(redirct):
+      - 地址栏变化,
+      - 可以访问其他站点
+      - 是两次请求, 无法使用request对象共享数据
+    - 转发不需要写*虚拟目录*,重定向需要写
+    - 动态获取虚拟目录: String contextPath = request.getContextPath();
+  - 验证码
+    - 防止恶意注册
+
+
+
+### ServeletContext 对象
+  - 概念: 代表整个web应用, 可以和整个Tomcat通信
+  - 功能:
+    - 1. 获取MIME类型
+      - MIME类型: 互联网通信过程中定义的一种文件类型标准
+      - 格式: 大类型/小类型   text/html    image/jpeg
+      - String getMimeType(String file) ; 
+      - 整个MIME类型和对应的文件后缀存储在服务器里(tomcat),所以可以根据文件后缀名获取MIME, 则tomcat/config/web.xml
+      - ajax请求时注意:
+        - 在服务器的setContentType中: 默认指定的mime类型是'text/html'
+        - jQuery的ajax方法中,应该指定对应参数为"json",否则会认为返回的对象为text/html类型
+        - 服务端想返回json类型,需要设置content-type为 "application/json", 浏览器会根据此头使用对应的json解析器
+    - 2. 域对象: 共享用户所有请求的数据
+      - `void setAttribute(String name, Object obj)` 存储数据
+      - `Object getAttribute(String name, Object obj)` 获取数据
+      - `void removeAttribute(String name, Object obj)` 移除数据
+    - 3. 获取文件的真实(服务器)路径
+      - getRealPath(String path)
+      - ClassLoader只能获取src目录下的文件,不能获取webapp下的静态文件
+  - 获取:
+    - 通过request对象, xxx版本后不能用了吗???
+      - `request.getServletContext()` 
+    - 通过HttpServlet
+      - `this.getServletContext()`
+
+
+
+
+### JSON
+  - 概念: JavaScript Object Notation JavaScript对象表示法
+    ```
+      Person p = new Person();
+      p.setName("张三")
+      p.setAge(23)
+      p.setGender("male")
+
+    ```
+  - 用途: 存储和交换文本信息的语法: 
+  - 比xml优点: 更小,更快,更易解析
+  - JSON数据和Java对象的相互转换
+    - JSON解析器
+      - Jsonlib, Gson, fastJson, jackson
+    - 1. JSON -> Java对象
+      - 使用场景不多
+      - 调用ObjectMapper的相关方法进行转换
+        - 1. readValue(jsonString, Class)
+    - 2. Java对象 -> JSON
+      - 使用步骤
+        - 1.导入jar包
+        - 2.创建Jackson核心对象, ObjectMapper
+        - 3. 调用ObjectMapper的方法来转换
+          - writeValue(参数1, obj)
+            - 参数1: 
+              -  File, 将obj对象转换为JSON字符串,并保存到指定文件中
+              -  Writer, 将obj对象转换为JSON字符串,并将json字符串填充到*字符输出流*中
+              -  OutputStream, 将obj对象转换为JSON字符串,并将json字符串填充到*字节输出流*中
+          - writeValueAsString(obj) 将对象转为json字符串
+      - 两个注解
+        - 1. @JsonIgnore 忽略属性
+        - 2. @JsonFormat(pattern="yyyy-MM-dd") 属性值格式化
+      - 复杂的Java对象的转换
+        - 1. List集合 -> [{},{}...]
+        - 2. Map集合  -> {}
+
+
 
   
-
+=============================================
 
 
 
@@ -763,6 +880,9 @@ public interface MyFunctionalInterface {
     - 用于存储一次会话的多次请求间的数据,存在服务器端
     - session可以存储任意大小的数据 
 	
+### Redis
+
+
 
 
 ### 登录案例
@@ -789,6 +909,11 @@ public interface MyFunctionalInterface {
      - getProperty()
      - setProperty(Class, key, value)
      - populate(Object obj, Map map) 将Map集合的键值对信息,封装到对应的JavaBean 对象中
+
+#### 案例: 校验用户名是否存在
+  - 期望服务器返回的数据格式: 
+    - `{userExist: true, msg: "用户名已存在,请更换"}`
+    - `{userExist: false, msg: "用户名可用"}`
 
 
 
