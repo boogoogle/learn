@@ -380,6 +380,7 @@ public static void functionName(){
 8. ^ + n, generator代码
 9. cmd + p 调出方法的传参
 10. iter 自动补全遍历list的代码
+11. 在idea中,创建文件时,在文件前面加上包名,idea会自动创建对应的包例如: "cn.itcast.hello"
 
 
 ### 其他
@@ -668,16 +669,6 @@ public static void functionName(){
   - System.arraycopy(src, srcPos, destPos, length)
 
 
-====================================
->++++++++ 以上是基础,到p226 +++++++++<
-====================================
-
-
-
-
-====================================
->++++++++  以下从p241开始  +++++++++<
-====================================
 
 ### 泛型
   - E e: Element元素
@@ -693,6 +684,67 @@ public static void functionName(){
 
 
 
+### 反射Reflect: 框架设计的灵魂
+  - 概念: 将类的各个组成部分封装为其他对象,这就是反射机制.
+  - 好处:
+    - 在程序的运行过程中,操作这些对象
+    - 解耦,提高程序的可扩展性
+    - [必看参考](https://www.cnblogs.com/fzz9/p/7738381.html)
+  - 获取Class对象的方式
+    1. `Class.forName("全类名")`: 将字节码文件加载进内存,返回Class对象
+       - 多用于配置文件,将类名定义在配置文件里. 读取文件,加载类 
+    2. 类名.class, 通过类名的属性class获取(此时已经将字节码文件加载到内存中了)
+       - 多用于参数的传递
+    3. 对象.getClass(): getClass()方法在Object类中定义着(这个对象已经实例化了,任何一个对象都可以调用)
+       - 多用于对象的获取字节的方式
+     - 结论: 同一个字节码文件(.class)在一*次程序运行过程中,只会被加载一次*,不论通过哪一种方法获取的class对象都是同一个   
+  - Class对象
+    - 获取:
+      - 1. 获取成员变量
+        - Field[] getFields()  // 获取public修饰的成员变量
+        - Field getField(String name)  // 指定名称的public成员变量
+        - Field[] getDeclareFields()   // 获取*所有*成员变量,包括private/public/protected/,同时可以设置私有变量
+        - Field getDeclareField(String name)
+      - 2. 获取构造方法
+        - Constructor<?>[] getConstructors()
+        - Constructor<T> getConstructor(类<?> ... parameterTypes)
+        - Constructor<T> getDeclaredConstructor(类<?> ... parameterTypes)
+        - Constructor<?>[] getDeclaredConstructors()
+      - 3. 获取成员方法
+        - Method[] getMethods()  // 获取所有public修饰的方法,包括父类的public方法
+          - 获取的method,有一个 method.getName()方法,可以获取方法名
+        - Method getMethod(String name, 类<?>...parameterTypes)  // name为方法名, 后面的参数为方法的传参类型.class
+          - 例如: 
+            - 获取: `Method eatMethod = personClass.getMethod("eat", String.class);`
+            - 执行: `eatMethod.invoke(p, "orange");`
+        - Method[] getDeclaredMethods()
+        - Method getDeclaredMethod(String name, 类<?>...parameterTypes)
+      - 4. 获取类名
+        - String getName()
+      - 暴力反射: 获取/设置私有属性,私有方法,需要使用暴力反射,不然会报错
+        - setAccessible(true)
+    - Field:
+      - 获取值
+        - get
+      - 设置值
+        - set
+    - Constructor 构造方法
+      - 用来创建对象: 
+        - T newInstance(object...intargs)
+        - 使用空参数构造方法创建对象,操作可以简化: Class对象的newInstance方法
+          - personClass.newInstance()
+    - 案例: 
+      - 创建任意类的对象,并且执行其中任意方法
+        - 实现:
+          - 1. 配置文件
+          - 2. 反射
+        - 步骤: 
+          - 1. 将需要创建的对象的全类名和需要执行的方法定义在配置文件中
+          - 2. 在程序中加载读取配置文件
+          - 3. 使用反射技术来加载类文件进内存
+          - 4. 创建对象并执行方法
+
+
 
 
 
@@ -700,6 +752,13 @@ public static void functionName(){
 
 
 
+
+
+### 注解
+  - 作用:
+    1. 编写文档: javadoc
+    2. 代码分析: 通过注解对代码进行分析(使用反射)
+    3. 编译检查: 通过代码里标识的注解让编译器实现基本的编译检查(override) 
 
 ### 字节和编码
 - utf-8中3个字节是一个中文,gbk中两个字节是一个中文
@@ -710,8 +769,11 @@ public static void functionName(){
 ### Properties类
 - java.util.Properties类,继承自HashTable,标识一个持久的属性集
 - 唯一和io流结合的集合,可以保存在流中加载
-  - load
+  - load(InputStream is)
   - store
+    ```
+      Properties ppt = new Properties()
+    ```
 
 - 获取src路径下的文件的方式 --> ClassLoader 类加载器
 - 
