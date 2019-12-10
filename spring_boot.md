@@ -72,9 +72,132 @@
           pets: [cat, dog, pig]
           ```
       - @ConfigurationPropertions(prefix="person")
+        - 默认从全局配置文件中获取值
         - 告诉SpringBoot将本类中的所有属性和配置文件中相关的配置进行绑定
         - 该组件必须在容器中(@Component),不然不会生效
+      - @Value: 
+        - `` @Value("${person.last-name}")``
+        - 只在某个业务逻辑中获取某一个配置文件中的某个值,用@Value
+      - @PropertySource
+        - 加载指定的配置文件
+      - @ImportResource
+        - 导入Spring的配置文件,让配置文件里面的内容生效
+        - 写到主应用类上
+### 配置文件占位符
+  - RandomValuePropertySource: 配置文件中可以使用随机数
+    - `${random.value} ${random.int} ${random.long} ${random.int(10)} ${random.int[1,100]}`
+  - 占位符获取之前配置的值,如果没有可以用: 指定默认值
+    - `person.dog.name=${person.name: xxxx}` // 如果没有person.name则用xxxx来赋值给person.dog.name
 
-### 配置文件注入
-  - https://www.bilibili.com/video/av20965295?p=11
-  - 
+### Profile
+  - 对不同环境提供不同配置,可以通过激活,指定参数等方式快速切换环境
+    - 1. 多profile文件形式
+      - 格式: 
+        - application-dev.properties
+        - application-prod.properties
+    - 2. 通过yaml的document块模式配置
+    - 3. 命令行模式
+      - `--spring.profiles.active=dev`
+
+### 配置文件的加载位置
+  - SpringBoot会扫描以下位置的application.properties或者application.yml作为默认配置文件
+    - file:./config/    --file:是项目根目录?
+    - file:./
+    - classpath:/config/
+    - classpath:/
+    - 以上优先级顺序从高到低, 高的会覆盖低的
+    - 通过配置spring.config.location来改变默认配置
+### 外部配置的加载规则,有十几种,先不用看了...
+
+### 自动配置原理
+  - https://www.bilibili.com/video/av20965295?p=19
+### @Conditional
+
+### 日志框架,不看了,用到了再说
+
+
+------------ 以下p28开始,-------------
+
+## SpringBoot与Web开发
+  
+### 静态资源映射规则
+  - 所有/webjars/**, 都去classpath:/META-INF/resources/webjars/找资源
+    - webjars: 以jar包的方式引入静态资源, 用不到
+    - /** 访问当前项目的任何资源(静态资源的文件夹)
+      ```
+        classpath:/META-INF/resources/
+        classpath:/resources/
+        classpath:/static/
+        classpath:/public/
+        / 当前项目的根路径
+      ```
+    - 手动配置静态资源目录
+      - spring.resources.static-lcations=classpath:/hello/,classpath:/img,
+
+### SpringBoot 对SpringMVC的自动配置
+  - ContentNegotiatingViewResolver & BeanNameViewResolver 
+    - 视图解析器ViewResolver: 根据方法的返回值的都视图对象(View), 视图对象决定如何渲染(转发、重定向等)
+    - ContentNegotiatingViewResolver: 组合所有的视图解析器
+    - 如何定制: 自己给容器中添加视图解析器, ContentNegotiatingViewResolver会自动注入
+  - Converter, GenericConverter
+    - public String hello(User user): 类型抓换使用Converter
+    - Formatter:  专门给日期做格式化
+      - 可以在application.properties里面修改格式化的格式
+      - `spring.mvc.data-format="yyyyMMdd HH:mm`
+  - HttpMessageConverters
+    - SpringMVC中转换http请求和响应的: User user--> JSON
+    - 是从容器中确定,获取所有的HttpMessageConverter
+    - 自己给容器中添加HttpMessageConverter,只需要将自己的组件注册在容器中(@Bean @Component)
+  - ConfigurableWebBindingInitializer
+    - 初始化WebDataBinder
+    - 请求数据 ==== JavaBean
+### org.springframework.boot.autoconfigure.web: web的所有自动场景
+
+
+### 扩展SpringMVC
+  - 编写一个配置类(@Configuration), 是WebMvcConfigureAdapter类型,不能标注@EnableWebMvc
+
+### 如何修改SpringBoot的默认配置
+  - 模式: 
+    1. 先看容器中是否有用户自动配置的(@Bean @Component),有就使用用户配置,无则自动配置.比如(ViewResolver)将用户配置和自动配置结合使用
+    2.  @import(EnableWebMvcConfiguration)
+  - @EnableWebMvc全面接管SpringMVC的配置,自动配置失效,不推荐!!! 
+
+
+### RestfulCRUD
+  - URI方式: /资源名称/资源标识
+  - 用请求方式来区分不同请求
+    - 查询员工 emp/id get
+    - 添加员工 emp post
+    - 修改员工 emp/id put
+    - 删除 员工 emp/id delete
+    - 查询所有员工 /emps
+
+
+### 其他注解
+  - @Repository 
+    - 将数据访问层(DAO层)的类标识为Spring Bean
+
+
+### 返回json数据
+  - 给Controller使用@RestController, springboot会默认使用Jackson转换实体类为json数据,发送给客户端
+
+### 错误处理
+  - 默认在ErrorMvcAutoConfiguration
+    - DefaultErrorAttributes
+    - ErrorBasicController
+    - ErrorPageCustomizer
+      - 
+    - DefaultErrorViewResolver
+  - 参照上面: 改写错误页面和错误json
+
+
+### 嵌入式Servlet容器
+  - SpringBoot默认使用tomcat为嵌入式的Servlet容器
+  - 修改 1. (ServerProperties)
+    - server.xxx 来修改通用的服务器配置,比如端口,访问路径
+    - server.tomcat.xxx 来修改tomcat的相关配置
+      - server.tomcat.uri-encoding=utf-8
+  - 修改 2. EmbededServletContainerCustomizer
+    - 
+
