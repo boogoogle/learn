@@ -21,7 +21,7 @@ select * from user where username="" and password=""
 ### 
 - SQL注入问题:
   - 在拼接sql时,有一些sql的特殊关键字参与字符串的链接,就会造成安全性问题
-  - 解决: PreparedStatement
+  - 解决: PreparedStatement 
   - 
 ### PreparedStatement (后期都用这个对象,安全又高效))
   - 普通Statement执行的是静态sql

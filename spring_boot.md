@@ -194,10 +194,46 @@
 
 ### 嵌入式Servlet容器
   - SpringBoot默认使用tomcat为嵌入式的Servlet容器
-  - 修改 1. (ServerProperties)
+  - 配置文件修改配置 1. (ServerProperties)
     - server.xxx 来修改通用的服务器配置,比如端口,访问路径
     - server.tomcat.xxx 来修改tomcat的相关配置
       - server.tomcat.uri-encoding=utf-8
-  - 修改 2. EmbededServletContainerCustomizer
-    - 
+  - 嵌入式修改配置 2. EmbededServletContainerCustomizer
 
+
+#### 特殊的配置类名
+  - xxxConfigurer 用来扩展配置
+  - xxxxCustomizer 用来定制配置
+
+
+### 注册Servlet三大组件
+  - 由于SpringBoot默认以jar包的方式启动嵌入式的Servlet容器来启动SpringBoot应用,没有web.xml文件,所以采用以下方式注册组件
+  - Servlet
+    - ServletRegistrationBean
+  - Filter
+    - FilterRegistrationBean
+  - Listener
+    - ServletListenerRegistrationBean
+
+### 使用其他Servlet容器
+  - Jetty(长链接)
+  - Underlow(并发性能好)
+
+### 使用外部Servlet容器  
+  - https://www.bilibili.com/video/av20965295?p=51
+  - 现在用不到以后用到了在看吧
+
+
+### 数据访问: 使用Spring Data统一处理,可以访问关系型&非关系型数据库
+  - JDBC  MyBatis 持久化技术 Spring Data JPA
+#### 使用jdbc & mysql
+  - spring-boot-starter-jdbc
+  - mysql-connector-java
+  - 自动配置原理
+    1. 参考DataSourceConfiguration,根据配置创建数据源,默认使用Tomcat连接池, 可以使用spring.datasource.source 指定自定义的数据源类型(c3p0, druid等)
+    2. DataSourceInitializer: ApplicationListenter
+      -  runSchemaScripts(); 运行建表语句
+      -  runDataScripts(); 运行插入数据的额sql语句
+      -  将文件命名为  `schema-*.sql` or `data-*.sql` 
+         -  默认规格是schema.sql 或者schema-all.sql
+         -  要使用-*,需要自己指定

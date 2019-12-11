@@ -45,3 +45,13 @@ nginx:
     ``` 
   - proxy_set_header: 给上游服务器设置请求头
     - 在转发的时候记录客户端的ip等信息
+
+
+### 注意事情
+  - nginx中location的转发是完全转发,
+  - 也就是说针对location /api 的请求转发到另一台服务器后,接收方处理的请求仍是/api开头的,
+  - 有可能是/api/user 也可能是/api-xxxx
+
+
+### 参考
+  - [Nginx配置静态资源](https://www.cnblogs.com/weiyinfu/p/10387282.html)
