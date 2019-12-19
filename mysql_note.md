@@ -67,6 +67,11 @@ select * from user where username="" and password=""
         - 定义工具类,封装数据库连接池初始化等操作
 
     
+### insert 插入数据
+  - `INSERT INTO table_name ( field1, field2,...fieldN )
+                       VALUES
+                       ( value1, value2,...valueN );`
+  - field一般都可以省略
 
 
 

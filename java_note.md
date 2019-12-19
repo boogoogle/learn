@@ -376,14 +376,15 @@ public static void functionName(){
 1. cmd + y 删除一行
 2. cmd + d 复制当前行到下一行
 3. cmd + option + l // 格式化
-4. option + shift + 上下箭头, 移动当前行
-5. 5.fori会自动补全for循环,for(int i=0; i<5; i++){...}
-6. shift + enter 下一行开始输入
-7. shift + cmd + enter 自动补全分号;
-8. ^ + n, generator代码
-9. cmd + p 调出方法的传参
-10. iter 自动补全遍历list的代码
-11. 在idea中,创建文件时,在文件前面加上包名,idea会自动创建对应的包例如: "cn.itcast.hello"
+4. cmd + n 搜索类
+5. option + shift + 上下箭头, 移动当前行
+6. 5.fori会自动补全for循环,for(int i=0; i<5; i++){...}
+7. shift + enter 下一行开始输入
+8. shift + cmd + enter 自动补全分号;
+9. ^ + n, generator代码
+10. cmd + p 调出方法的传参
+11. iter 自动补全遍历list的代码
+12. 在idea中,创建文件时,在文件前面加上包名,idea会自动创建对应的包例如: "cn.itcast.hello"
 
 
 ### 其他

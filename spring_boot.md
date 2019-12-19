@@ -34,6 +34,14 @@
   - 配置文件
     - 两个默认的全局配置文件
       - application.properties
+        ```
+        # 配置项目的访问路径, 这样项目的根目录就是localhost:8080/boot2/ 了
+        #server.context-path=/boot2
+        # 指定配置文件
+        #spring.config.location=/user/boo/springConfig/xxxx.properties
+        #spring.mvc.data-format="yyyyMMdd HH:mm
+
+        ``` 
       - application.yaml
   - YAML
     - 标记语言, 后缀yaml/yml
@@ -237,3 +245,56 @@
       -  将文件命名为  `schema-*.sql` or `data-*.sql` 
          -  默认规格是schema.sql 或者schema-all.sql
          -  要使用-*,需要自己指定
+      -  必须要加always，不然不会自动读取schema文件 `initialization-mode: always`
+  - 操作数据库: 自动配置了jdbcTemplate  
+
+#### mybatis
+  - sqlsessionfactory干啥的 ?
+  - 需要写一个mybatis的config
+    - 自动把小驼峰转换成大驼峰
+  - 直接格SpringBootApplication的注解上添加 @MapperScan,指定包名,可以扫描指定package中的Mapper生效使用
+    - @MapperScan(value = "com.booo.spring.mapper")
+  - 使用方式
+    - 1. 全注解方式
+    - 2. 配置文件方式
+
+### JPA
+  - SpringData 简化数据访问
+    - SpringDataCommons项目提供了一套统一个标准,包含CRUD,查询,排序和分页的相关操作.
+    - 统一的Repository接口
+    - 数据访问模板类
+  - JPA: ORM(Object Relational Mapping)
+    - 1. 编写一个实体类(bean)和数据表进行映射, 并且配置好映射关系
+      ```
+      // 使用JPA注解配置映射关系
+      @Entity // 告诉JPA这是一个实体类(和数据表映射有关)
+      @Table(name = "tbl_jpa_user")// @Table来指定对应的数据表,如果省略默认表名是类名小写(这里是jpauser)
+      public class JpaUser {
+
+          @Id // 标识这是一个主键
+          @GeneratedValue(strategy = GenerationType.IDENTITY) // 自增主键
+          private Integer Id;
+
+          @Column(name="username", length = 50) // 对应数据表的一个列
+          private String username;
+
+          @Column // 默认列表就是属性名
+          private String password;
+
+      ```  
+    - 2.编写一个Dao接口来操作实体类对应的数据表(Repository)
+       ```
+       public interface JpaUserRepository extends JpaRepository<JpaUser, Integer> {}
+
+       ``` 
+    - 3.基本配置
+      ```
+      spring:
+          jpa:
+            hibernate:
+        #       更新或者创建数据表
+              ddl-auto: update
+        #      控制台显示sql
+            show-sql: true
+      ```
+    
