@@ -73,3 +73,14 @@
     - 告诉方法,产生一个对象,然后这个Bean对象交给Spring管理
     - 产生这个Bean对象的方法只会呗Spring调用一次,随后放到自己的IOC容器中
     - 默认Bean的名称就是该方法名
+
+
+### Spring
+  - 在类的定义处声明以下annotation
+    - @ResponseBody // 这个类的所有方法都直接写给浏览器(对象会自动转成JSON)
+    - @Controller   // 定义当前类是一个Controller,可以对处理路由
+    - @RestController // 作用相当于上面两个类的总和
+  - 如果只在类顶部声明了@Controller, 需要在该类的成员方法上写上@ResponseBody
+  - 在成员方法上使用的annotation
+    - @RequestMapping("/hello") // 自动给hello路径绑定各种请求方法(get, post等)的的Mapping
+    - @GetMapping("/hello")

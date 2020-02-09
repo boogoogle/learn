@@ -385,6 +385,7 @@ public static void functionName(){
 10. cmd + p 调出方法的传参
 11. iter 自动补全遍历list的代码
 12. 在idea中,创建文件时,在文件前面加上包名,idea会自动创建对应的包例如: "cn.itcast.hello"
+13. code > optimize code 把当前文件中的无关引用都删除 cmd + option + o
 
 
 ### 其他
@@ -592,7 +593,7 @@ public static void functionName(){
     - 1. 不能直接new 抽象类
     - 2. 必须用一个子类来继承父类 `public Cat extends Animal{}`
     - 3. 子类必须覆盖重写(也叫做实现)父类中的抽象类, 若不能全部重写父类中的抽象类,则此子类也必须是一个抽象类(用abstract修饰定义)
-    - 4. 创建子类对象进行使用
+    - 4. 创建子类对象进行使用:使用的时候必须创建一个子类对象
 
 
 ### 接口和多态
@@ -618,8 +619,8 @@ public static void functionName(){
   - 例子: Cat cat = (Cat)animal; 把上面的animal还原成cat. 
   - 注意: 还原对象必须是原来创建的类, 否则报错  ClassCastException
 
-### instanceof 判断类
-  - son instanceof father
+### instanceof 判断类的实例
+  - son instanceof father/grandfather  ==> true
 
 ### final 关键字
   - 标识最终的,不可改变的
@@ -701,7 +702,24 @@ public static void functionName(){
        - 多用于参数的传递
     3. 对象.getClass(): getClass()方法在Object类中定义着(这个对象已经实例化了,任何一个对象都可以调用)
        - 多用于对象的获取字节的方式
-     - 结论: 同一个字节码文件(.class)在一*次程序运行过程中,只会被加载一次*,不论通过哪一种方法获取的class对象都是同一个   
+       - 结论: 同一个字节码文件(.class)在一*次程序运行过程中,只会被加载一次*,不论通过哪一种方法获取的class对象都是同一个   
+    4. 获取父类
+      - Class<? super T> getSuperclass(); 返回此对象所表示的类的父类。
+      - Type getGenericSuperclass();  
+        - 返回表示此 Class 所表示的实体（类、接口、基本类型或 void）的直接父类的 Type
+        - 如果超类是参数化类型，则返回的 Type 对象必须准确反映源代码中所使用的实际类型参数。如果以前未曾创建表示超类的参数化类型，则创建这个类型。有关参数化类型创建过程的语义，请参阅 ParameterizedType 声明。
+       - 另外另个相似的方法
+         - field.getGenericType()  返回属性声明时的Type类型
+         - field.getType() 返回属性声明时的类型对象(返回class对象)
+           - 具体区别
+            ```
+            1.首先是返回的类型不一样，一个是Class对象一个是Type接口。
+
+            2.如果属性是一个泛型，从getType（）只能得到这个属性的接口类型。但从getGenericType（）还能得到这个泛型的参数类型。
+
+            3.getGenericType（）如果当前属性有签名属性类型就返回，否则就返回 Field.getType()。
+
+            ```
   - Class对象
     - 获取:
       - 1. 获取成员变量
@@ -717,7 +735,7 @@ public static void functionName(){
       - 3. 获取成员方法
         - Method[] getMethods()  // 获取所有public修饰的方法,包括父类的public方法
           - 获取的method,有一个 method.getName()方法,可以获取方法名
-        - Method getMethod(String name, 类<?>...parameterTypes)  // name为方法名, 后面的参数为方法的传参类型.class
+        - Method getMethod(String name, 类<?>...parameterTypes)  // name为方法名, 后面的参数为方法的传参类型.class(必需!!!)
           - 例如: 
             - 获取: `Method eatMethod = personClass.getMethod("eat", String.class);`
             - 执行: `eatMethod.invoke(p, "orange");`
@@ -758,6 +776,11 @@ public static void functionName(){
 
 
 
+    - ParameterizedType 参数化类型
+      - `java.lang.reflect.ParameterizedType`;
+      - Type[] getActualTypeArguments 获取所有的泛型参数
+      - Type getRawType()  获取类型,忽略泛型参数
+      - [参见](https://blog.csdn.net/JustBeauty/article/details/81116144)
 ### 注解
   - 作用:
     1. 编写文档: javadoc
@@ -768,6 +791,12 @@ public static void functionName(){
 - utf-8中3个字节是一个中文,gbk中两个字节是一个中文
 
 
+
+### 多线程
+  - synchronized
+    - 1. 一个线程访问一个对象中的synchronized(this)同步代码块时，其他试图访问该对象的线程将被阻塞。
+    - 2.当一个线程访问对象的一个synchronized(this)同步代码块时，另一个线程仍然可以访问该对象中的非synchronized(this)同步代码块。
+    - [reference](https://blog.csdn.net/luoweifu/article/details/46613015)
 
 ## 属性集
 ### Properties类
@@ -1005,6 +1034,7 @@ public interface MyFunctionalInterface {
 
 
 
+
 ### 其他问题
 -  maven3.6.2有问题,降级为3.6.1
 -  jdk1.8对应java8,与之对应的tomcat9.x
@@ -1012,3 +1042,8 @@ public interface MyFunctionalInterface {
 -  导入jar包
    -  1. 把jar包复制到libs目录下
    -  2. 在idea中,选中 -- add as library
+
+
+
+### 常见问题
+  [POJO和JavaBean区别联系](https://www.jianshu.com/p/224489dfdec8)

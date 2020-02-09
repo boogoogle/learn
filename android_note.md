@@ -289,4 +289,23 @@
       - at android.os.StrictMode$AndroidBlockGuardPolicy.onNetwork`
     - 
   
+
+
+
+
+## ViewModel
+  - ViewModel不会丢失,即使activity被销毁
+  - 应用被杀死后再打开,ViewModel的数据会重建
+  - implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-rc03'
+    - 应用进入后台呗系统杀死时保存部分数据,手动退出或杀死不会保留
+  - AndroidViewModel 这里面可以直接通过getApplication访问全局作用域
+
+
+### TIPS
+- onSaveInstanceState: 应用进入后台呗系统杀死时保存部分数据,手动退出或杀死不会保留
+- Application 继承自 Context
+  - context -> getApplicationContext()
+  - application -> getApplication()
+- Now that you're using LiveData from mSavedState, the MutableLiveData name isn't used anymore and can be removed.
+
         

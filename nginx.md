@@ -19,7 +19,7 @@ nginx:
 ### 重载:
   - `nginx -s reload`
 
-### 检测配置文件是否正确
+### 检测配置文件是否正确,同时会列出当前使用conf文件路径
   - `nginx -t`
 
 ### nginx.conf
@@ -50,8 +50,18 @@ nginx:
 ### 注意事情
   - nginx中location的转发是完全转发,
   - 也就是说针对location /api 的请求转发到另一台服务器后,接收方处理的请求仍是/api开头的,
-  - 有可能是/api/user 也可能是/api-xxxx
+  - 因为是字符匹配,所以有可能是/api/user 也可能是/api-xxxx
 
 
 ### 参考
   - [Nginx配置静态资源](https://www.cnblogs.com/weiyinfu/p/10387282.html)
+
+
+
+nginx -t           #测试配置文件
+nginx              #启动命令
+nginx -s stop      #强制停止Nginx服务
+nginx -s quit      #处理完请求后再停止服务
+nginx -s reload    #重启命令
+ps -ef |grep nginx #查看进程命令
+nginx -v           #查看Nginx的版本号

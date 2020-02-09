@@ -185,6 +185,9 @@
 ### 其他注解
   - @Repository 
     - 将数据访问层(DAO层)的类标识为Spring Bean
+  - @RequestBody - 只能接受JSON数据!!!
+    - 将Json格式的参数自动绑定到Entity类,
+    - [参考](https://www.hangge.com/blog/cache/detail_2485.html)
 
 
 ### 返回json数据
