@@ -84,3 +84,9 @@
   - 在成员方法上使用的annotation
     - @RequestMapping("/hello") // 自动给hello路径绑定各种请求方法(get, post等)的的Mapping
     - @GetMapping("/hello")
+
+
+###SpringMvc:
+  - 在Controller中使用@RequestBody User user,需要对User的bean写一个无参构造,不然会报错`com.fasterxml.jackson.databind.exc.InvalidDefinitionException: Cannot construct instance of `com.example.deleted.demo.bean.User` (no Creators, like default construct, exist): cannot deserialize from Object value (no delegate- or property-based Creator)
+     **/`
+  - @RequestHeader("content-type") String hct, 可以通过hct拿到请求头中的content-type的值,同理可以拿到其他请求头的值

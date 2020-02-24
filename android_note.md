@@ -1,7 +1,8 @@
 ### Android Studio配置
 - [SDK国内镜像,推荐使用国内的](https://blog.csdn.net/boonya/article/details/38752647)
 - [gradle设置阿里镜像,项目级&全局](https://www.jianshu.com/p/b038bd95444b)
-
+- [Android Studio官方文档(包括gradle等)](https://developer.android.google.cn/studio/build/gradle-tips?hl=zh-cn)
+- [Android文档](https://developer.android.google.cn/docs?hl=zh-cn)
 
 
 #### Project structure
@@ -13,12 +14,15 @@
     - main
         - java 主要文件目录
         - res: 
-           - drawable图片,
+           - drawable: 图标有固定的尺寸，不需要更改
            - layout布局,
+           - mipmap-xxx 存放不同尺寸的图片文件,或者有动画则放在这下面
            - values字符串文件等资源
              - strings
                - 代码中通过R.string.xxx_xxx来获取该字段的引用
                - xml文件中通过@string/xxx_xxx 来获取
+             - styles: 风格样式设置,
+             - dimen.xml 存放尺寸标准
         - AndroidManifest.xml 项目配置文件
           - 四大组件在此注册
           - 给应用程序添加权限声明
@@ -236,10 +240,8 @@
 
 
 
-
-
 ### 常用API
-  - `LayoutInflater.from(getContext()).inflate(resourceId, parent, false);`
+  - `LayoutInflater.from(context).inflate(resourceId, parent, false);`
     - LayoutInflater的from方法构建一个LayoutInflater对象,
     - 然后调用inflate方法动态静态一个布局文件
     - 第二个参数是给加载好的布局再添加一个父布局
@@ -299,6 +301,18 @@
   - implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-rc03'
     - 应用进入后台呗系统杀死时保存部分数据,手动退出或杀死不会保留
   - AndroidViewModel 这里面可以直接通过getApplication访问全局作用域
+  - ViewModelProviders
+
+
+
+
+
+### Android View $ xml 相关
+  - `android:id="@+id/my_button"`
+    - @ 符号指示 XML 解析器应解析并展开 ID 字符串的其余部分，并将其标识为 ID 资源
+    - 加号 (+) 表示这是一个新的资源名称，必须创建该名称并将其添加到我们的资源（在 R.java 文件中）内
+    - 引用 Android 资源 ID 时，不需要加号，但必须添加 android 软件包命名空间，如下所示: `android:id="@android:id/empty" ` 
+
 
 
 ### TIPS
@@ -307,5 +321,19 @@
   - context -> getApplicationContext()
   - application -> getApplication()
 - Now that you're using LiveData from mSavedState, the MutableLiveData name isn't used anymore and can be removed.
+- statusBarColor: res -> style.xml中配置
+- <action android:name="android.intent.action.MAIN"></action>  进入应用默认打开的activity 
+- <category android:name="android.intent.category.LAUNCHER" /> 
+- res -> values -> dimen.xml 存放尺寸标准
+- 长度单位 sp ,dp分别是啥?
+- AttributeSet 使用布局的时候,传入的属性,都能通过这个AttributeSet获取到
+
+### 第三方库
+  -  RecyclerView
+  -  CircleImageView
+  -  AndroidUtilCode
+  -  Glide // 加载完网络图片
+  -  Glide-Transformations // 结合glide处理图片
+  -  Realm 数据库操作(相对于sqllite更简单,更快)
 
         
