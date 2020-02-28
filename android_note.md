@@ -336,4 +336,8 @@
   -  Glide-Transformations // 结合glide处理图片
   -  Realm 数据库操作(相对于sqllite更简单,更快)
 
-        
+
+### 视图and组件复用
+  - include 方式
+  - 自定义View 方式
+  - 在style中配置分割线的样式,通过View style=@style/xxx 来设置 
