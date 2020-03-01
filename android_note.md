@@ -13,19 +13,22 @@
   - src
     - main
         - java 主要文件目录
-        - res: 
+        - raw 存放各种原生资源(音频，视频，一些XML文件等)，我们可以通过openRawResource(int id)来获得资源的二进制流！其实和Assets差不多，不过这里面的资源会在R文件那里生成一个资源id而已
+        - res: 该文件夹下的资源文件都会在R.java文件下生成对应的资源id
            - drawable: 图标有固定的尺寸，不需要更改
            - layout布局,
            - mipmap-xxx 存放不同尺寸的图片文件,或者有动画则放在这下面
-           - values字符串文件等资源
-             - strings
+           - values字符串文件等资源,可以参考[这篇博客](https://blog.csdn.net/wjrong_1/article/details/20918759)
+             - strings.xml
                - 代码中通过R.string.xxx_xxx来获取该字段的引用
                - xml文件中通过@string/xxx_xxx 来获取
-             - styles: 风格样式设置,
-             - dimen.xml 存放尺寸标准
+             - styles.xml: 风格样式设置,
+             - dimen.xml 存放尺寸标准, 可以使用Resources.getDimension()获得这些资源
+             - attrs.xml 通常运来存放自定义控件的新属性(不一定非得叫attrs.xml,可以是xyz.xml只要里面的标签定义了,就能通过R.stylable.xxx 来获取)
         - AndroidManifest.xml 项目配置文件
           - 四大组件在此注册
           - 给应用程序添加权限声明
+          - theme
   - build.gradle
     - app目录下的gradle构建脚本,指定构建的相关配置
     - 指定当前项目的所有依赖关系
@@ -206,6 +209,7 @@
 
 ### 自定义控件
   - 只引入布局
+    
     - 可以直接通过include引入
   - 通过集成LinearLayout或者其他控件的 Inflater实现
     - 引入
@@ -213,6 +217,7 @@
         <com.example.uiwidgettest.TitleLayout
          android:layout_width="match_parent"
          android:layout_height="wrap_content"/>`
+        ```
 
 
 ### ListView
@@ -290,7 +295,7 @@
     - 2. *不允许在主线程*中访问网络,不然会报错`
       - at android.os.StrictMode$AndroidBlockGuardPolicy.onNetwork`
     - 
-  
+
 
 
 
@@ -341,3 +346,6 @@
   - include 方式
   - 自定义View 方式
   - 在style中配置分割线的样式,通过View style=@style/xxx 来设置 
+
+
+
