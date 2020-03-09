@@ -11,7 +11,8 @@
   - 浮点数, 也叫做小数
     - 数学写法，如1.23，3.14，-9.01
     - 科学计数法 1.23x109就是1.23e9
-  - 字符串,用单引号或者双引号包裹
+  - 字符串,用单引号或者双引号包裹, 参考[字符串和编码](https://www.liaoxuefeng.com/wiki/1016959663602400/1017075323632896)
+    - bytes类型的数据用带b前缀的单引号或双引号表示：`x = b'ABC'`
     - 包括转移字符 \n, \t, \\等
     - 如果有很多字符都需要转义,允许用r''表示,''内部的字符串默认不转义
        ```
@@ -121,13 +122,15 @@
       >>> isinstance([1,2,3], Iterable) # list是否可迭代
       True
       >>> isinstance(123, Iterable) # 整数是否可迭代
-      False
-   ```
-  - for循环里引用多个变量
-  - ```
-    for x, y in [(1, 1), (2, 4), (3, 9)]:
-      print(x, y)
+       False
     ```
+  - for循环里引用多个变量
+      ```
+      for x, y in [(1, 1), (2, 4), (3, 9)]:
+        print(x, y)
+
+      ```
+
   - 迭代示例请参考 findMinAndMax.py
 
 ### 列表生成式
@@ -179,6 +182,13 @@
     - `f = open(filepath, "rb")`
     - 以特定字符编码读取文件
       - f = open(filepath, 'r', encoding='gbk', errors='ignore') #忽略错误编码
+  - 写文件
+    - `f.open(filepath, 'w') # w会直接覆盖已存在文件
+    - 'a' 参数会以追加的形式写入文件
+    - f.write() 以string的形式写入文件,不能是bytes
+  - BytesIO
+    - f = BytesIO()
+    - f.write('中文'.encode('utf-8')) # 注意写入的不是字符串,而是utf-8编码的bytes
 
 
 ### requests库使用小炒
@@ -187,3 +197,6 @@
   - r.content 获取响应体
   - r.json() 可以把响应内容解释为json
   - 使用 r.raise_for_status() 或者检查 r.status_code 是否和你的期望相同。
+
+
+### [virtualenv](https://www.liaoxuefeng.com/wiki/1016959663602400/1019273143120480)
