@@ -1,3 +1,11 @@
+### 命令行登录mysql
+  ```
+  mysql -u root -p
+
+  ```
+  - [Error: ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server; consider upgrading MySQL client](https://www.jianshu.com/p/c8eb6d2471f8)
+  - 注意: 第二个'password' 要用自己真实的password
+
 
 ```
 insert into account values(null, '李四', 10000),(null, '赵六', 10000),(null, '刘能', 10000),

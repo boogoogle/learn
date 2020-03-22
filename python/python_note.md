@@ -200,3 +200,13 @@
 
 
 ### [virtualenv](https://www.liaoxuefeng.com/wiki/1016959663602400/1019273143120480)
+  - mac下默认安装有py2.7, 要使用py3的venv,需要使用以下命令
+  - ` python3 -m venv venv `
+  - ` source venv/bin/activate ` // 激活局部环境
+
+### pipenv
+  - pipenv是唯一靠谱实用的python依赖管理工具
+  - mac 安装
+    - ` sudo pip3 install pipenv`
+    - ` pipenv insatll` //将当前目录设置为虚拟环境
+  - 参考自[这儿](https://blog.csdn.net/Hanniel/article/details/94294155)
