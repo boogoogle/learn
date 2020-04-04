@@ -65,3 +65,34 @@ nginx -s quit      #处理完请求后再停止服务
 nginx -s reload    #重启命令
 ps -ef |grep nginx #查看进程命令
 nginx -v           #查看Nginx的版本号
+
+
+
+### location细读
+```
+        #匹配到url是/b开头的,
+        #    可能是/b/xxx, 
+        #    也可能是/bxxx,
+        #  则在/test/b/ 下寻找, 此时 /test/b/ 为查找的根目录
+        #    查找/test/b/ 目录下面 任何以/b开头的资源
+        # 举例: 如果url是 /b/index.html
+        #           那么nginx的查找路径是  /test/b/b/index.html
+        #      如果url 是 /b-s.txt
+        #           那么nginx的查找路径是 /test/b/b-s.txt 
+        location /b { 
+            root   /usr/local/etc/nginx/test/b/;
+            index  index.html index;
+            # try_files $uri /b/index.html;
+        }
+
+        # 如果url中有/b/这三个字符, 则以/test/b/为根目录
+        # 然后查找url中的资源, 注意这里的url包括 /b/
+        # 举例: 如果url是 /b/index.html
+        #      那么nginx的查找路径是  /test/b/b/index.html(因为前面的/test/b/是根目录)
+        # location /b/ { 
+        #     root   /usr/local/etc/nginx/test/b/;
+        #     index  index.html index;
+        #     # try_files $uri /b/index.html;
+        # }
+
+```
