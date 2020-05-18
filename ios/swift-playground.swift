@@ -31,7 +31,7 @@ let empayDictionary = [String: Float]()
 //    print(key)
 //}
 for(key,value) in occupations {
-//    print(key, value)
+    //    print(key, value)
 }
 
 // 条件&循环
@@ -57,7 +57,7 @@ for score in individualScores {
 
 //..< 来标识范围,也可以使用传统写法
 for i in 0..<4{
-//    print(i)
+    //    print(i)
 }
 
 
@@ -117,7 +117,7 @@ let sm = scores.map({
     if(number % 2 == 1) {
         return 0
     } else {
-      return res
+        return res
     }
 })
 //print(sm)
@@ -134,7 +134,7 @@ class Shape {
     }
     
     // 在删除对象之前进行一些清理工作,可以使用deinit创建一个析构函数。
-
+    
     func description() -> String {
         return "A shape calld \(name) with \(n) sides"
     }
@@ -190,10 +190,27 @@ struct Human {
     }
 }
 
-var tonyStark =  Human("Iron Man", 58, 180);
-tonyStark.introduce()
+var tonyStark =  Human(name: "Iron Man", age: 58, height: 188)
+//tonyStark.introduce()
+
 
 // 协议和扩展
+
+protocol flyable {
+    func takeOff(speed: Int)
+}
+
+extension Human: flyable {
+    func takeOff(speed: Int) {
+        print("\(name) is flying at \(speed)")
+    }
+}
+
+tonyStark.takeOff(speed: 800)
+
+
+
+
 
 
 // 泛型
