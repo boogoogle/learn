@@ -4,6 +4,12 @@
     - alt + 2   向右移动一个空间
     - ctrl + 2  调度中心(缩小显示当前桌面打开的所有窗口)
     - CapsLock通过设置相当于cmd键
+    - command+shift+G 在finder中快速进入某一个路径
+
+
+### finder相关
+  - Finder的快速预览功能: 选中文件,然后按空格键
+  - 在finder中快速进入某一个路径: command+shift+G 
 
 
 

@@ -5,7 +5,21 @@ UIViewRepresentable:
 
 
 ### 结构体struct
+  - SwiftUI使用struct而不是class来描述view
+  - 同时, 把UIView 和 UIViewController统一到View协议中
 
+
+
+### swift中的方法
+  - 例子`func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)`
+  - 第二个参数有两个名字:
+    - numberOfRowsInSection在调用这个方法的时候使用. 我们称之为参数的"外部名称"
+    - section: 是参数的"内部名称"
+  - 在swift中,参数的名称是方法全名的一部分
+  - 下面是三个不同的方法
+    - tableView(numberOfRowsInSection)
+    - tableView(cellForRowAt)
+    - tableView(didSelectRowAt)
 
 ### 有些协议
   - Hashable: 只有遵循了Hashable 协议 才能被添加到 Set 中 或者用作 Dictionary 的 key 值
@@ -80,6 +94,13 @@ Observable Object for Storage
 
 
 ### 可选项(Optional Type)
+  - [参考这里理解](https://blog.csdn.net/humiaor/article/details/67632572)
+  - swift的变量或者常量必须有一个值,
+    - 在其他编程语言中可能会使用nil或者null来表示一个变量没有值,但是swift不允许
+    - 当一个变量突然编程nil时,app会挂掉,出现“null pointer dereference（空指针运算）”
+    - swift通过禁止使用nil来避免这一情况
+    - 除非声明变量为**可选型**
+      - 只有**可选型变量才能拥有nil**这个值
   - `let possibleNumber: Int?`
     - 表示变量可能是Int类型,也可能是没有值
       - 因为上面的语句没有给变量possibleNumber赋值, swift编译器自动给它设置成了nil
@@ -89,7 +110,17 @@ Observable Object for Storage
   - 常量/变量声明的时候类型后面带有 **?** 或者 **!** 为可选类型(optional type，即可选项)
   - 叹号 ! -- 隐式展开可选项
     - 主要用在swift类的初始化过程中
-    - 我们可以对一个可选项类型(Optional Type)使用后缀操作符!来强制拆包(force unwrap)访问这个值，来继续后面的操作。
+    - 对于可选项类型(Optional Type), 必须使用后缀操作符!来**强制拆包(force unwrap)**才能访问这个值，继而执行后面的操作。
+      - 强制拆包标识你**担保这个变量的值一定不是nil**
+  - 对于可选型变量的使用
+      ```
+      if let temporaryConstant = optionalVariable {
+        // temporaryConstant now contains the unwrapped value
+        // of the optional variable
+      }
+
+      ```
+    - 因为可选型变量有可能为nil,所以需要使用这种特殊的语法来进行**解包**
 
 ### 运算符
   - ?? 对于可选类型使用
@@ -118,6 +149,12 @@ b // 11
     - Set
     - Dictionary
 
+### 数组
+  - 初始化空数组
+  - 获取某个元素的索引 items.firstIndex(of: item)
+    - 1. 不能再任意对象上使用该数组方法, 只能在**相同的对象**上使用它
+    - 怎么处理呢?
+      - 1. 在数组元素的类上声明 NSObject
 
 ### 协议(Protocol)
   - 定义完成某种任务或功能所必须的方法和属性
@@ -130,6 +167,11 @@ b // 11
     - 默认场景下 protocol 是没有具体类型信息的，
     - 但是用 some 修饰后，编译器会让 protocol 的实例类型对外透明。
 
+### 三个概念
+  - delegation（委托）：用一个对象代表另一个对象做一些事情；
+  - target-action（动作目标）：连接事件—例如点击按钮，到一个action method（动作方法）。
+  - MVC
+    - 数据模型之间执行的运算通常被称为“业务逻辑”或者“域逻辑”
 
 ### 一些疑问
   - ForEach 和 List 的区别?
@@ -211,6 +253,8 @@ john!.apartment = unit4A
  ```
 
  ### 弱引用 weak 
+   - @IBOutlets也通常使用weak关键字。这里并不是为了避免循环引用，而是为了清晰的表明**视图控制器并不真正的拥有输出的视图**。
+   - 还有一种引用类型叫做“无主的unowned”，它和weak类似，也可以用于委托，区别在于weak变量允许为nil
  ```
 
 // 弱引用
@@ -246,3 +290,138 @@ john = nil
 // 因为unit4A对john是weak引用,
 // 所以john实例销毁,它的deinit就被触发了
 ```
+
+
+
+### 常用框架和他们的api
+  - 不同控件提供不同的专用功能
+    - UIKit 提供用户接口控件,管理视图控制器, User Interface
+    - Foundation: 提供基础功能模块
+    - Core Graphics 绘图
+    - AVFoundation 音视频
+    - iOS的完整框架体系被统称为：Cocoa Touch。
+
+
+  - IBAction: Interface Builder Action
+    - 跟story上的控件进行连线
+  - IBOutlet
+    - 只有声明为IBOutlet的属性，才能跟storyboard中的控件进行连线
+    - 属性要想能够连线必须在数据类型前面加上IBOutlet
+
+  - UIAlertController
+    - 方法
+      - addAction()
+  - present() 是所有View Controller 共有的方法
+  - 动作方法和普通方法
+    - 类似@IBAction这样的方法,界面构造器(Interface Builder)能够使用这些方法
+    - 普通方法不会在界面上调用
+  - 竖屏模式 Portrait（肖像画）因为肖像画总是竖着的，
+  - 横屏模式: landscape（风景画）因为风景画多半是横着的。
+  - Navigation Controller
+  - Tab Bar Controller
+  - TextField
+    - textField.becomeFirstResponder() // 自动激活文本框,弹出键盘
+    - Auto-enable Return Key。 没有输入的时候不匀速按回车键
+  - NSString与String
+    - NSString是Object-C语言中用于存储文本的对象
+    - 通过声明某个变量 as NSString,可以使用NSString的方法
+
+
+
+### 数字操作:
+  - lround(Double) 四舍五入
+  - acr4random_uniform(100) 生成0~99之间的随机整数
+  - abs()
+
+
+### ViewController
+  - self: ViewContoller 允许使用self访问自己的实例
+  - dismiss(animated: true, completion: nil) 关闭当前view
+  - present() 是所有View Controller 共有的方法
+  - 内建属性
+    - title; 在View Controller 中直接修改title的值,导航控制器就会自动改变导航栏名称
+
+
+### Info.plist
+  - plist - Property List
+  - Info.plist是应用程序包中的一份配置文件，它负责告诉iOS这个app应该作何表现。它也包含某些不能放在其他地方的关于app的一些具体特征，比如app的版本号。
+  - 在早期版本的Xcode中，你必须手工配置Info.plist，但是在Xcode 8中已经不需要这样做了。你可以直接在Project Setting中设置大多数内容。
+
+### NS对象
+  - NextStep的缩写
+  - 已NS为前缀的对象都是由 Foundation框架提供的
+
+### NSCoder: 
+  - 可以使对象存储他们的数据到一个格式化的文件中
+
+### AutoLayout
+  - storyboard中的相对布局,constraint布局等
+
+### launch screen
+  - 启动app时，往往需要花一点时间。从点击app的图标，到真正可以使用app之间的这点时间内，你可以使用launch screen做个无缝衔接。launch screen会占用屏幕，直到app被完全加载。
+  - 如果没有launch screen占用屏幕，那么在app被加载出来前，iPhone屏幕会空白一片，这不是非常好的选择。
+  - 也可以使用一种叫做XIB的storyboard文件，也叫“nib”，来代替图片，这是一种和storyboard很像的东西，只是它只能包含一个单屏幕的设计。
+  - app的launch screen在默认生成的LaunchScreen.storyboard文件中设置, 我们可以删除它
+
+### delegate
+  - UIKit uses a design pattern called **delegation** to decide where work happens. 
+### Bundle对象
+  - 
+
+### 存储
+
+### UITableView
+  - 有两种模式
+    - plain : 容纳相同事物的列表，比如通讯录，或是地址薄，每一行上面都是一个人名或者地址。
+    - grouped: 经常被作来容纳不同事物的列表，比如通信录中的多种属性，姓、名、座机号码、手机号码等。
+  - cell: cell是一种视图(view)
+    - 它在某一行可见时可以展现一行数据。如果你的屏幕大小只能同时容纳10行，那么你就只有10个cell，那怕你一共有数千行数据
+    - indexPath是一个指向表中具体某一行的一个简单的对象。
+    - 通过这indexPath.row来获取当前的行号
+    - indexPath.section : 在grouped中使用,区分section
+  - tatiSc Cells 和 Dynamic Prototypes
+    - 如果表格中的节数和行数是确定的且不会发生变化的情况,你就可以使用静态单元（static cells）。这种情况多数用于给用户提供输入数据的界面
+  - TableView对象有多个init方法,分别是:
+    - init?(coder) 用于从story模板中自动加载视图控制器
+    - init(nibName, bundle)手工从视图控制器中加载nib(nib文件和story一样,只是仅包含一个视图控制器)
+    - init(style)用于你想要创建没有故事模板或者nib时的table view controller 
+
+### prepare（for：sender：）
+  - 该方法会在一个界面将要向另一个界面转场时被UIKit调用。
+  - 可以使你在新的视图控制器展现前向它发送数据，通常会在这一时刻对新界面进行各种配置。
+    -  segue.destination 指向新的视图控制器
+    -  sender: 包含一个控制转场的引用,
+       -  很多时候: 它是你刚点击的按钮,或者某一个View
+
+# 委托和协议是手拉手出现的，这是Swift语言的一个重要特色。
+  - 委托方法通常以第一个参数来指代它们的属主。
+    - 这样做不是必须的，但是是更好的。
+### AppDelegate
+
+
+### NSObject
+
+
+### as as! as?
+  - as 
+    - 从派生类转换为基类,向上转型(upcasts)
+    - 消除二义性, 数值类型转换
+    - switch中进行模式匹配
+  - as!
+    - 向下转型(Downcasting)
+    - 由于是强制类型转换,所以转换失败runtime会报错
+  - as?
+    - 向下转型(Downcasting)
+    - 转换不成功会返回nil
+    - 成功的话**返回可选值类型*
+
+
+### try try! try?
+  - try! 
+    - 如果不想处理异常,而且不想让异常继续传播下去,可以使用try!.这有点儿类似NSAssert().但是一旦使用try!后,在可能抛出异常的方法中抛出了异常,那么程序会立刻停止.
+  - try?
+    - 使用这个关键字返回一个可选值类型,如果有异常出现,返回nil.如果没有异常,则返回可选值.
+
+### is   
+  - 进行类型判断, 
+  - 也可以用来判断某个类是否遵循了某个协议

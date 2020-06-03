@@ -22,7 +22,8 @@ var occupations = [
     "Kaylee": "Mechanic",
 ]
 
-// 空数组或者字典，使用初始化语法。
+
+// 空数组或者字典，使用初始化语法。()表示初始化
 let emptyArray = [String]()
 let empayDictionary = [String: Float]()
 
