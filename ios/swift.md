@@ -373,6 +373,8 @@ john = nil
 
 ### AutoLayout
   - storyboard中的相对布局,constraint布局等
+  - Label标签的设置比较特殊
+    - 选中lalbe控件     
 
 ### launch screen
   - 启动app时，往往需要花一点时间。从点击app的图标，到真正可以使用app之间的这点时间内，你可以使用launch screen做个无缝衔接。launch screen会占用屏幕，直到app被完全加载。
@@ -434,6 +436,13 @@ john = nil
   - 使用popViewController是因为 show转场把View放到了导航堆栈中
 
 ### let _ =你告诉了Xcode不需要关心popViewController()的返回结果
+
+### tint color
+  - UIKit用来表示某种东西可以交互的一个颜色系统
+  - 修改label的颜色为tintColor 
+    - label.textColor = view.tintColor
+
+
 
 ### 等号
   - === 检查两个变量是否引用了同一个对象
