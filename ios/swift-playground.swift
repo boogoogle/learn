@@ -216,3 +216,46 @@ tonyStark.takeOff(speed: 800)
 
 // 泛型
 
+
+
+
+    func documentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    func dataFilePath() -> URL {
+        return documentsDirectory().appendingPathComponent("Checklists.plist")
+    }
+    func saveChecklistItems(){
+//        let data = NSMutableData()
+        do{
+//            print(items)
+            let archiverData = try? NSKeyedArchiver.archivedData(withRootObject: checklist.items, requiringSecureCoding: true)
+            try archiverData?.write(to: dataFilePath())
+        }catch {
+            print("save2file error: \(error)")
+        }
+    }
+    
+    func loadChecklistItems(){
+        let path = dataFilePath()
+        print(path)
+        
+        if let data = try?Data(contentsOf: path) {
+//            let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
+//            items = unarchiver.decodeObject(forKey: "ChecklistItems") as! [ChecklistItem]
+//            unarchiver.finishDecoding()
+            // 上面的api过时了, 参考这里https://www.swiftdevcenter.com/save-and-get-objects-using-nskeyedarchiver-and-nskeyedunarchiver-swift-5/
+            do{
+                print("data", data)
+                let iis = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as! [ChecklistItem]
+                checklist.items = iis
+//                print(iis)
+            } catch {
+                print(error)
+            }
+            
+            
+        }
+        
+    }

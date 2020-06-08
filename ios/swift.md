@@ -20,6 +20,8 @@ UIViewRepresentable:
     - tableView(numberOfRowsInSection)
     - tableView(cellForRowAt)
     - tableView(didSelectRowAt)
+  - tableView.dequeueReusableCell(withIdentifier: String)// 获取一个prototype cell 的拷贝
+    - [Cell有四种,看这里](https://www.jianshu.com/p/dfce5b274d97)
 
 ### 有些协议
   - Hashable: 只有遵循了Hashable 协议 才能被添加到 Set 中 或者用作 Dictionary 的 key 值
@@ -144,10 +146,17 @@ b // 11
   - Double Float 浮点型
   - Bool 
   - String
+    - a.localizedStandardCompare(b) 按照字母表顺序排序,**忽略大小写**
+      - 结果可能是: 
+        - .orderedDescending
+        - .orderedAscending
+        - .orderedSame
   - 集合类型
     - Array
+      - `[value1, value2, ....]`
     - Set
     - Dictionary
+      - `[key1: value1, key2: value2,....]`
 
 ### 数组
   - 初始化空数组
@@ -334,13 +343,21 @@ john = nil
   - abs()
 
 
-### ViewController
+### ViewController        
   - self: ViewContoller 允许使用self访问自己的实例
   - dismiss(animated: true, completion: nil) 关闭当前view
-  - present() 是所有View Controller 共有的方法
+  - present() 是所有View Controller 共有的方法,实例化一个ViewController
   - 内建属性
     - title; 在View Controller 中直接修改title的值,导航控制器就会自动改变导航栏名称
+    - navigationController 内建的导航控制器属性,
+      - 可以使用navigationController?.delegate读取它，因为它是个可选型，所以你要使用一个问号。
+  - storyboard
+    - 每个ViewController都有一个storyboard属性
+    - storyboard用来引用这个ViewController是从哪个股市模板中读取来的 
+    - 因为ViewController并不总是从故事模板中获取,所以它是可选型 storyboard!
 
+### UINavigationController
+  - 有一个topViewController属性,标识正在显示中的界面
 
 ### Info.plist
   - plist - Property List
@@ -402,6 +419,29 @@ john = nil
 ### NSObject
 
 
+### FileManager
+  - FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+
+
+### UserDefault
+  - 保存一些小东西,比如设置类, 屏幕浏览记录
+  - -1 表示没有值
+  - UserDefault.standard.integer(forKey)方法找不到键对应的值时,默认返回0
+    - 可以通过UserDefaults.standard.register(defaults: dictionary) 设置这个默认值
+
+### dismiss 和 navigationController?.popViewController(animated: true)的适用场景
+  - dismiss 只适用于 present modally
+  - 使用popViewController是因为 show转场把View放到了导航堆栈中
+
+### let _ =你告诉了Xcode不需要关心popViewController()的返回结果
+
+### 等号
+  - === 检查两个变量是否引用了同一个对象
+  - == 检查两个变量是否有同一个值
+  - 对于视图控制器而言，你使用两个等号它也会去比较引用而不是值，就像三个等号一样，但是技术上讲使用三个等号显得更加专业。
+
+
+##[swift类型转换](https://www.cnswift.org/type-casting)
 ### as as! as?
   - as 
     - 从派生类转换为基类,向上转型(upcasts)
@@ -409,18 +449,22 @@ john = nil
     - switch中进行模式匹配
   - as!
     - 向下转型(Downcasting)
+    - 使用as!表示你**确定这此转型一定会成功**
     - 由于是强制类型转换,所以转换失败runtime会报错
   - as?
     - 向下转型(Downcasting)
-    - 转换不成功会返回nil
+    - 转换不**成功会返回nil**
     - 成功的话**返回可选值类型*
 
 
 ### try try! try?
+  - [参考](https://www.cnswift.org/error-handling)
   - try! 
+    - 使用try! 表示你坚定的知道 后面的语句不会抛出错误!
     - 如果不想处理异常,而且不想让异常继续传播下去,可以使用try!.这有点儿类似NSAssert().但是一旦使用try!后,在可能抛出异常的方法中抛出了异常,那么程序会立刻停止.
   - try?
-    - 使用这个关键字返回一个可选值类型,如果有异常出现,返回nil.如果没有异常,则返回可选值.
+    - 用 try?通过将错误**转换为可选项**来处理一个错误
+    - 如果一个错误在 try?表达式中抛出，则表达式的值为 nil
 
 ### is   
   - 进行类型判断, 
