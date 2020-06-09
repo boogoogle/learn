@@ -157,6 +157,11 @@ b // 11
     - Set
     - Dictionary
       - `[key1: value1, key2: value2,....]`
+  - 枚举类型 enumeration 简写为enum
+    - 由一系列符号和对应的值的列表组成
+    - 一般用点号开头
+    - 类似: .none .default .alert .sound 等等
+    - 上面的都是**枚举符号**
 
 ### 数组
   - 初始化空数组
@@ -181,6 +186,12 @@ b // 11
   - target-action（动作目标）：连接事件—例如点击按钮，到一个action method（动作方法）。
   - MVC
     - 数据模型之间执行的运算通常被称为“业务逻辑”或者“域逻辑”
+
+### 类方法和实例方法（Class methods & instance methods）
+  - 类方法
+    - ``class func nextChecklistItemID()``
+    - class关键字意味着你可以在不引用DataModel的前提下，调用这个方法。
+
 
 ### 一些疑问
   - ForEach 和 List 的区别?
@@ -334,6 +345,7 @@ john = nil
   - NSString与String
     - NSString是Object-C语言中用于存储文本的对象
     - 通过声明某个变量 as NSString,可以使用NSString的方法
+  - date picker 的高是216
 
 
 
@@ -374,7 +386,12 @@ john = nil
 ### AutoLayout
   - storyboard中的相对布局,constraint布局等
   - Label标签的设置比较特殊
-    - 选中lalbe控件     
+    - 1. 选中lalbe控件  
+    - 2. Xcode菜单 Editor → Size to Fit Content
+### 本地通知(UserNotifications)
+  - iOS的消息通知,只在App未使用时才生效
+  - 如果你正在使用app，你当然不需要关于这个app的提醒。
+
 
 ### launch screen
   - 启动app时，往往需要花一点时间。从点击app的图标，到真正可以使用app之间的这点时间内，你可以使用launch screen做个无缝衔接。launch screen会占用屏幕，直到app被完全加载。
@@ -396,14 +413,16 @@ john = nil
   - cell: cell是一种视图(view)
     - 它在某一行可见时可以展现一行数据。如果你的屏幕大小只能同时容纳10行，那么你就只有10个cell，那怕你一共有数千行数据
     - indexPath是一个指向表中具体某一行的一个简单的对象。
-    - 通过这indexPath.row来获取当前的行号
-    - indexPath.section : 在grouped中使用,区分section
+    - row : 来获取当前的行号 , 索引从0开始
+    - section : 索引从0开始
   - tatiSc Cells 和 Dynamic Prototypes
     - 如果表格中的节数和行数是确定的且不会发生变化的情况,你就可以使用静态单元（static cells）。这种情况多数用于给用户提供输入数据的界面
   - TableView对象有多个init方法,分别是:
     - init?(coder) 用于从story模板中自动加载视图控制器
     - init(nibName, bundle)手工从视图控制器中加载nib(nib文件和story一样,只是仅包含一个视图控制器)
     - init(style)用于你想要创建没有故事模板或者nib时的table view controller 
+  - cellForRowAt 一般用于**有数据源**的静态cell,
+    - 如果用不不存在数据源的cell, 需要格外小心.
 
 ### prepare（for：sender：）
   - 该方法会在一个界面将要向另一个界面转场时被UIKit调用。
@@ -448,6 +467,7 @@ john = nil
   - === 检查两个变量是否引用了同一个对象
   - == 检查两个变量是否有同一个值
   - 对于视图控制器而言，你使用两个等号它也会去比较引用而不是值，就像三个等号一样，但是技术上讲使用三个等号显得更加专业。
+
 
 
 ##[swift类型转换](https://www.cnswift.org/type-casting)

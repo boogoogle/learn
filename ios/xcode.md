@@ -7,9 +7,12 @@
 
 
 ### 快捷键
-cmd + shift + o    搜索文件名,快速打开
-option + 单击  弹出变量or方法的详情
-cmd + shift + l   打开library弹窗
+  - cmd + shift + o    搜索文件名,快速打开
+  - option + 单击  弹出变量or方法的详情
+  - cmd + shift + l   打开library弹窗
+  - cmd + 0 (数字) 切换左侧菜单栏
+  - cmd + option + 0(数字) 切换右侧属性栏
+  - cmd + option + y  底部调试区域显示
 模拟器上: cmd + 12345 调整模拟器大小
 
 ### 比较两个文件差异
