@@ -3,6 +3,13 @@
 
 UIViewRepresentable: 
 
+  - UIHostingController
+    - A UIHostingController is a UIViewController subclass that represents a SwiftUI view within UIKit contexts.
+  - [UIPageViewController](https://www.jianshu.com/p/f3d1cb8ce2d3)
+    - 管理内容页之间导航的容器控制器(container view controller)，其中每个子页面由子视图控制器管理。
+    - 内容页间导航可以由用户手势触发，也可以由代码控制
+    - UIPageViewController可以实现图片轮播效果和翻书效果.
+
 
 ### 结构体struct
   - SwiftUI使用struct而不是class来描述view
@@ -15,7 +22,7 @@ UIViewRepresentable:
   - 第二个参数有两个名字:
     - numberOfRowsInSection在调用这个方法的时候使用. 我们称之为参数的"外部名称"
     - section: 是参数的"内部名称"
-  - 在swift中,参数的名称是方法全名的一部分
+  - 在swift中,**参数的外部名称**是方法全名的一部分
   - 下面是三个不同的方法
     - tableView(numberOfRowsInSection)
     - tableView(cellForRowAt)
@@ -93,10 +100,21 @@ Observable Object for Storage
       - `let widthLabel = label + "\(int width)"`
 
   - ..< 来标识范围,也可以使用传统写法
+    - `1..<5`  表示 `1...4`
 
+### 字符串操作
+  - ` String(format: "%.8f",location.coordinate.latitude) `
+  - 占位符: "%.8f"
+    - 占位符一定是由一个百分号%开始
+    - 常见的: 
+      - %d 用于整数，
+      - %f 用于浮点数，
+        - %.8f 作用和%f一样,**.8**表示保留8位小数
+      - %@ 用于任意对象。
 
 ### 可选项(Optional Type)
   - [参考这里理解](https://blog.csdn.net/humiaor/article/details/67632572)
+  - [and这里](https://www.jianshu.com/p/d01a0f4a2988)
   - swift的变量或者常量必须有一个值,
     - 在其他编程语言中可能会使用nil或者null来表示一个变量没有值,但是swift不允许
     - 当一个变量突然编程nil时,app会挂掉,出现“null pointer dereference（空指针运算）”
@@ -144,6 +162,8 @@ b // 11
 ### 基本数据类型
   - Int 整型
   - Double Float 浮点型
+    - `var d = 3.14` swift会自动判断类型为 Double,而不是Float
+  - Character 仅仅存放一个字符
   - Bool 
   - String
     - a.localizedStandardCompare(b) 按照字母表顺序排序,**忽略大小写**
@@ -162,7 +182,12 @@ b // 11
     - 一般用点号开头
     - 类似: .none .default .alert .sound 等等
     - 上面的都是**枚举符号**
-
+  - 值类型和引用类型
+    - **引用类型**
+      - 使用class关键字定义的都是 
+    - **值类型**
+      - struct或者enum 定义的对象
+      - Int String Array
 ### 数组
   - 初始化空数组
   - 获取某个元素的索引 items.firstIndex(of: item)
@@ -170,7 +195,16 @@ b // 11
     - 怎么处理呢?
       - 1. 在数组元素的类上声明 NSObject
 
+### 类
+  - `requiredi nit?(coder)`
+    - 前面的关键字是required。required关键字用于**强制每个子类**总是执行某个特定的init方法。
+### 对象
+  - 将功能和数据结合在一起的可重用单元，都是对象。
+  - 属性
+    - 存储属性
+    - 计算属性
 ### 协议(Protocol)
+  - 一个协议就是一组方法名称的列表
   - 定义完成某种任务或功能所必须的方法和属性
   - 实际上并不提供功能或者任务的具体实现(Implementation)
 
@@ -443,6 +477,17 @@ john = nil
 ### FileManager
   - FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
 
+### Core Location
+  -  GPS
+     - 真实的iPhone设备有三种获取位置信息的方式，基站三角测量，Wifi和GPS
+       - 基站三角测量只要手机有信号就工作，但是精度不是非常高。
+       - Wifi会稍微好一些，但是仅仅在你周围有Wifi时才能工作。原理是使用一个包含无线网络设备位置信息的一个大数据库。
+       - GPS的测量精度是最高的，但是由于它是和卫星通讯，所以是三种方法中最慢的，并且时常在室内会失灵。
+     - Core Location把这些多种渠道读取位置信息并且转换为数字的复杂工作自己做完了。Core Location不会一直等待从GPS获取数据，而是把能优先获取到的数据先展示出来，然后再慢慢的提高精度。
+  - CLError
+    - CLError.locationUnknown 目前的位置信息未知，但是Core Location还在努力搜索。
+    - CLError.denied：用户拒绝了app访问位置信息。 
+    - CLError.network：找不到可用的网络。
 
 ### UserDefault
   - 保存一些小东西,比如设置类, 屏幕浏览记录
@@ -464,10 +509,16 @@ john = nil
 
 
 ### 等号
-  - === 检查两个变量是否引用了同一个对象
-  - == 检查两个变量是否有同一个值
+  - === 检查两个变量是否引用了同一个对象,即内存地址相同
+  - == 检查两个变量的值是否相等
   - 对于视图控制器而言，你使用两个等号它也会去比较引用而不是值，就像三个等号一样，但是技术上讲使用三个等号显得更加专业。
 
+
+### Error
+  - Error Domain=kCLErrorDomain Code=1
+    - domain是kCLErrorDomain,意思是这个错误是来自Core Location（CL）
+    - code为1，代表CLError.denied，意思是用户没有授权这个app可以获得位置信息。
+    - **k- 前缀**经常被iOS框架用来表示某个名称是**常量**
 
 
 ##[swift类型转换](https://www.cnswift.org/type-casting)

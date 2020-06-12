@@ -38,6 +38,7 @@ for(key,value) in occupations {
 // 条件&循环
 let individualScores = [75, 43, 103, 87, 12]
 var teamScore = 0
+var level = "Try again"
 for score in individualScores {
     if score > 50 {
         teamScore += 3
@@ -45,15 +46,59 @@ for score in individualScores {
         teamScore += 1
     }
 }
+
+// 使用switch
+switch score {
+    case 100:
+        level = "Perfect!"
+    case 80..<100:
+        level = "Good"
+    case 60..<80:
+        level = "Not bad"
+    default:
+        level = "Come on"
+}
+
+// guard 
+func sth(_ num: Int){
+    print("Start..")
+    guard num > 10 else {
+        print("小于10")
+        return
+    }
+}
+
+// Loops
+for i in 0...4 {
+    print(i)
+}
+
+for i in 0..<5 {
+    // do sth
+}
+
+
+// 如果你给by参数一个负数的话，那么stride就可以实现倒着数的功能。
+for i in stride(from: 0, to: 10, by: 2) {
+    print(i)
+}
+
+
 //print(teamScore)
 
 // 使用while循环
 
-//var n = 2
-//while n < 100 {
-//    n = n * 2
-//}
-//print(n)
+var n = 2
+while n < 100 {
+   n = n * 2
+}
+// 或者
+
+repeat {
+    n += 2
+} while n < 100
+
+// print(n)
 
 
 //..< 来标识范围,也可以使用传统写法
@@ -215,47 +260,3 @@ tonyStark.takeOff(speed: 800)
 
 
 // 泛型
-
-
-
-
-    func documentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
-    }
-    func dataFilePath() -> URL {
-        return documentsDirectory().appendingPathComponent("Checklists.plist")
-    }
-    func saveChecklistItems(){
-//        let data = NSMutableData()
-        do{
-//            print(items)
-            let archiverData = try? NSKeyedArchiver.archivedData(withRootObject: checklist.items, requiringSecureCoding: true)
-            try archiverData?.write(to: dataFilePath())
-        }catch {
-            print("save2file error: \(error)")
-        }
-    }
-    
-    func loadChecklistItems(){
-        let path = dataFilePath()
-        print(path)
-        
-        if let data = try?Data(contentsOf: path) {
-//            let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
-//            items = unarchiver.decodeObject(forKey: "ChecklistItems") as! [ChecklistItem]
-//            unarchiver.finishDecoding()
-            // 上面的api过时了, 参考这里https://www.swiftdevcenter.com/save-and-get-objects-using-nskeyedarchiver-and-nskeyedunarchiver-swift-5/
-            do{
-                print("data", data)
-                let iis = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as! [ChecklistItem]
-                checklist.items = iis
-//                print(iis)
-            } catch {
-                print(error)
-            }
-            
-            
-        }
-        
-    }
