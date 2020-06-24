@@ -1,5 +1,8 @@
 # SwiftUI
 
+  - edgesIgnoringSafeArea(.all)
+    - 不要在正式组件中使用, 仅仅在用作背景的组件上使用
+  - Color(color Literal), 然后双击色块,会弹出调色盘(color picker)
 
 UIViewRepresentable: 
 
@@ -9,6 +12,34 @@ UIViewRepresentable:
     - 管理内容页之间导航的容器控制器(container view controller)，其中每个子页面由子视图控制器管理。
     - 内容页间导航可以由用户手势触发，也可以由代码控制
     - UIPageViewController可以实现图片轮播效果和翻书效果.
+  - UIApplication
+    - [参考1](https://cloud.tencent.com/developer/article/1336362) 
+    - [参考2](https://www.jianshu.com/p/597b9d108f39)
+    - 处理用户的触摸事件
+      - 把事件放入队列,逐个处理
+      - 分发action message到它拥有的合适的目标控件上
+    - 该对象维持一个打开的窗口列表,通过这个列表可以检索应用程序的任何UIView对象
+    - 赋予一个代理对象UIApplicationDelegate, 以处理应用程序的生命周期/系统事件(来电,记事日程等)
+  - UIResponder 事件响应类: 响应屏幕事件,并维护一个响应链的机制
+    - 为需要响应并处理事件的对象定义了一组接口,这些事件分为两类
+      - 触摸事件
+      - 运动事件
+    - 在UIKit中，UIApplication、UIView、UIViewController这几个类都是直接继承自UIResponder类
+    - #selector: 通过方法名拿到某个方法
+      - [参考](https://www.jianshu.com/p/3be8d223528a)
+    - 日常工作中我们主要用到：
+      - 响应链及其管理
+      - 第一响应对象
+        - : 处理和屏幕位置无关的事件,例如摇动, 键盘输入等
+        - 苹果官方文档的说法是：第一响应对象是窗口中，应用程序认为最适合处理事件的对象
+          - UITextField当上第一响应对象的时候，就会调出一块小键盘。
+          - 通过resignFirstResponder取消当前的第一响应对象
+      - 响应触摸事件
+      - 验证命令(Menu菜单)
+      - 管理输入视图（自定义键盘）
+      - 等等。
+
+
 
 
 ### 结构体struct
@@ -175,6 +206,28 @@ b // 11
     - Array
       - `[value1, value2, ....]`
     - Set
+      - `var setExample = Set<String>()`
+      - `setExample.insert("aaa")`
+      - 方法
+        - 单个集合的方法
+          - insert
+          - remove
+          - removeAll
+          - isEmpty
+          - count
+          - contains
+        - 两个集合操作
+          - intersect 取两个集合的交集,同时存在a&b中,返回一个新集合
+          - a.exclusiveOr(b) 只存在a和只存在b中的元素,返回一个新集合. 和intersect正好互补
+          - union 取两个集合的并集, 返回一个新的集合
+          - a.subtract(b)  取在a, 不在b集合的值创建一个新的集合
+      - Set和Array不同的是，Set是无序的，可以通过调用sort()方法来进行排序。
+      - 判断
+        - == 判断两个集合是否包含全部相同的值
+        - isSubsetOf 判断 一个集合中的值是否也被包含在另外一个集合中
+        - isSupersetOf 判断 一个集合中包含的值是否含有另一个集合中所有的值
+        - isStrictSubsetOf or isStrictSupersetOf 判断一个集合是否是另外一个集合的子集合或者父集合并且和特定集合不相等。
+        - isDisjointWith(_:)方法来判断两个集合是否不含有相同的值
     - Dictionary
       - `[key1: value1, key2: value2,....]`
   - 枚举类型 enumeration 简写为enum
@@ -490,7 +543,7 @@ john = nil
     - CLError.network：找不到可用的网络。
 
 ### UserDefault
-  - 保存一些小东西,比如设置类, 屏幕浏览记录
+  - 保存一些小东西,比如设置类, 屏幕浏览记录, 类似于浏览器中的cookie
   - -1 表示没有值
   - UserDefault.standard.integer(forKey)方法找不到键对应的值时,默认返回0
     - 可以通过UserDefaults.standard.register(defaults: dictionary) 设置这个默认值
@@ -499,7 +552,7 @@ john = nil
   - dismiss 只适用于 present modally
   - 使用popViewController是因为 show转场把View放到了导航堆栈中
 
-### let _ =你告诉了Xcode不需要关心popViewController()的返回结果
+### **let _ = **你告诉了Xcode不需要关心popViewController()的返回结果
 
 ### tint color
   - UIKit用来表示某种东西可以交互的一个颜色系统
@@ -510,7 +563,7 @@ john = nil
 
 ### 等号
   - === 检查两个变量是否引用了同一个对象,即内存地址相同
-  - == 检查两个变量的值是否相等
+  - == 检查两个变量的值是否相等,用于枚举,结构体,字符串 等值引用类型
   - 对于视图控制器而言，你使用两个等号它也会去比较引用而不是值，就像三个等号一样，但是技术上讲使用三个等号显得更加专业。
 
 
@@ -520,8 +573,18 @@ john = nil
     - code为1，代表CLError.denied，意思是用户没有授权这个app可以获得位置信息。
     - **k- 前缀**经常被iOS框架用来表示某个名称是**常量**
 
+### static 和class 定义类方法
+  - 在方法的func关键字之前加上关键字static或者class都可以用于指定类方法.
+  - 不同的是用class关键字指定的类方法可以被子类重写, 如下: 
+    override class func work() {
+      print("Teacher: University Teacher")
+  }
+
+  - 但是用static关键字指定的类方法是不能被子类重写的, 根据报错信息: Class method overrides a 'final' class method. 
+  - 我们可以知道被static指定的类方法包含final关键字的特性--防止被重写. 
 
 ##[swift类型转换](https://www.cnswift.org/type-casting)
+  - **向下转型**请参考上文链接
 ### as as! as?
   - as 
     - 从派生类转换为基类,向上转型(upcasts)

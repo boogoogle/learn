@@ -72,3 +72,20 @@ console.log(s)
  /**
   * search replace split暂时未用到
   */
+
+
+  function sq(n){
+     var mid = n/2
+     var boundary 
+     if (mid * mid > n){
+      boundary = 0
+      mid = getMid(boundary, mid)
+     } else if(mid * mid < n) {
+      boundary = n
+      mid = getMid(boundary, mid)
+     }
+  }
+
+  function getMid(a, b){
+   return Math.abs(a-b  / 2)
+  }
