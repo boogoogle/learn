@@ -14,6 +14,9 @@
   - 3. 用该size在其父view中进行布局
 
 
+### tips
+  - [使用ForEach循环输入视图](https://hicc.me/foreach-enumerated/)
+
 
 
 ### 参考链接

@@ -612,3 +612,60 @@ john = nil
 ### is   
   - 进行类型判断, 
   - 也可以用来判断某个类是否遵循了某个协议
+
+
+### 关键字
+  - mutating
+    - 和C语言不同, swift中,我们可以给enum和struct添加方法
+    - 在struct 和 enum中, 通过mutating func xxx(){} 修改结构体或者枚举类型本身的值
+      ```
+      // 结构体使用
+      struct Point {
+          var x = 0, y = 0
+          // 不添加 mutating 关键字，不能在实例方法中修改属性值
+          mutating func moveXBy(x: Int, yBy y: Int) {
+              self.x += x
+              self.y += y
+          }
+      }
+
+
+      // 枚举中使用
+      enum ChangeStateSwitch {
+      
+          case Off, Low, High
+      
+          // 不添加 mutating 关键字，不能在实例方法中修改属性值
+          mutating func next() {
+              switch self {
+              case .Off:
+                  self = .Low
+              case .Low:
+                  self = .High
+              case .High:
+                  self = .Off
+              }
+          }
+      }
+
+      ```
+    - 可以给 protocol中的方法声明 添加mutating, 在对应的struct实现改protocol的时候,同样需要对相应的方法添加mutating关键字
+    - 举例
+        ```
+          // 在protocol中声明
+
+        protocol MyProtocol {
+            mutating func change()
+        }
+
+        // 结构体继承接口并实现对应方法
+
+        struct MyCar: MyProtocol {
+            var price = 3459234.23
+        
+            // 看这里
+            mutating func change() {
+                price = 56783.2
+            }
+        }
+        ```
