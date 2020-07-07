@@ -13,7 +13,14 @@
   - 2. 如果该view存在child，那么就拿着这个建议的尺寸去问他的child，child根据自身的behavior返回一个size，如果没有child，则根据自身的behavior返回一个size
   - 3. 用该size在其父view中进行布局
 
+### GeometryReader
+  - 可以自定义它的content,
+  - 与其他view不同,可以拿到一些在其他view中拿不到的信息
+  - 具体看参考项目 SiwftUIDemos
 
+### [EnvironmentObject](https://cloud.tencent.com/developer/article/1585679)
+  - 突出强调**此数据将由某个外部实体提供**, 所以不需要再具体的地方初始化,而是由外部统一提供
+  - 使用EnvironmentObject, SwiftUI将立即在环境中搜索正确类型的对象.如果找不到, 则程序会立即崩溃.
 ### tips
   - [使用ForEach循环输入视图](https://hicc.me/foreach-enumerated/)
 

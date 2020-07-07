@@ -241,8 +241,19 @@ b // 11
     - **值类型**
       - struct或者enum 定义的对象
       - Int String Array
-### 数组
-  - 初始化空数组
+### [数组](https://www.yiibai.com/swift/arrays.html)
+  - 数组方法
+    - .isEmpty
+    - .append添加
+    - arr += <Type>[]的方式来添加新的数据项
+    - arr[4...7] = [11,2]来改变一系列值
+    - insert(atIndex:) 在某个索引值之前添加数据项
+    - removeAtIndex()删除某一项
+    - removeLast 删除最后一项
+  - 数组遍历
+    - for item in arr
+    - for(index, value) in enumerate(arr)
+    - 
   - 获取某个元素的索引 items.firstIndex(of: item)
     - 1. 不能再任意对象上使用该数组方法, 只能在**相同的对象**上使用它
     - 怎么处理呢?
@@ -616,8 +627,10 @@ john = nil
 
 ### 关键字
   - mutating
+    - [参考](https://blog.csdn.net/zhongqing_fzq/article/details/49022111)
     - 和C语言不同, swift中,我们可以给enum和struct添加方法
-    - 在struct 和 enum中, 通过mutating func xxx(){} 修改结构体或者枚举类型本身的值
+    - 在struct 和 enum中, 通过mutating func xxx(){} 修改**结构体成员**或者**枚举类型本身的值**
+    - 在类的方法定义中,不需要使用mutating关键字, 因为他们本来就是可变的
       ```
       // 结构体使用
       struct Point {
@@ -669,3 +682,16 @@ john = nil
             }
         }
         ```
+  - associatedtype, 可参考[泛型文档](https://www.cnswift.org/generics)
+
+
+### [Result type](https://juejin.im/post/5c9586eee51d4536e85c3d60)
+  - a simpler, clearer wary of handling errors in complex code such as asynchronous APIs.
+  - 它定义了一种规范,通过Result(<Bool,Error>)来定义返回值
+
+
+### [swift调试](https://www.hackingwithswift.com/articles/210/how-to-fix-slow-list-updates-in-swiftui)
+  - 包括SwiftUI中, List组件的动态更新问题
+  - List{}.id(UUID()) 通过id参数, List用此区分每一个内部的row
+  - 注意: 
+    - @State修饰的属性一旦改变, SwiftUI会立即调用body方法
