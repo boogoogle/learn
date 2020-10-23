@@ -87,8 +87,8 @@ Observable Object for Storage
     -  An observable object needs to publish any changes to its data, so that its subscribers can pick up the change.
 
 
-@EnvironmentObject
-  -    
+@IBDesignable 和@IBInspectable
+  - 可以实时渲染在interface builder上，并且直接修改就能发生变化。
 
 ### 组件
   - [Image](https://github.com/fzhlee/SwiftUI-Guide#14Image-Basic)
@@ -260,7 +260,7 @@ b // 11
       - 1. 在数组元素的类上声明 NSObject
 
 ### 类
-  - `requiredi nit?(coder)`
+  - `requiredi init?(coder)`
     - 前面的关键字是required。required关键字用于**强制每个子类**总是执行某个特定的init方法。
 ### 对象
   - 将功能和数据结合在一起的可重用单元，都是对象。
@@ -570,8 +570,20 @@ john = nil
   - 修改label的颜色为tintColor 
     - label.textColor = view.tintColor
 
+### 控制流
+  - [guard](https://swift.gg/2016/02/14/swift-guard-radix/)
 
-
+### [UIKit相关](https://www.jianshu.com/p/ff7ffc8129a6)
+  - bounds(origin,size): The bounds rectangle, which describes the view’s location and size in its own coordinate system.: 描述当前视图在其自身坐标系统中的位置和大小。
+    - 通常bounds.origin的属性为(0,0),而bounds.size和frame.size是一致的
+  - frame: 描述当前视图在其父视图中的位置和大小。
+  - center: 描述当前视图的中心点在其父视图中的位置。在对视图进行旋转,放大/缩小时, center属性不会变
+  - alpha 透明度
+    - 取值0~1.0
+    - 在视图上添加透明度之后，会使子视图也有相同的透明度。
+    - 如果当前view的alpha是0，那么view及其子视图会一同消失，不论子视图的alpha是多少。
+    - 同时，view会从响应链中移除，而响应链中的下一个会成为第一响应者。
+  - userInteractionEnabled 是否接受用户交互
 ### 等号
   - === 检查两个变量是否引用了同一个对象,即内存地址相同
   - == 检查两个变量的值是否相等,用于枚举,结构体,字符串 等值引用类型

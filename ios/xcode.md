@@ -3,7 +3,12 @@
 
 
 
-
+### Auto Layout Cookbook
+  - pin: 
+    - 定义视图相对于邻居的位置,
+    - 或者快速定义视图的尺寸
+  - content hugging priority: 内容优先级
+  - compression resistance 抗压能力
 
 
 ### 快捷键

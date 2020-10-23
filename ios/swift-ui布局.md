@@ -7,6 +7,7 @@
     - 3. 类似于Shape, 给多大尺寸就使用多大尺寸
     - 4. 可能超出父控件的view
     - 5. 特殊组件,类似 Spacer...
+  - 
 
 ### 2. 布局原则
   - 1. 当布局某个view时，其父view会给出一个建议的size
@@ -17,6 +18,15 @@
   - 可以自定义它的content,
   - 与其他view不同,可以拿到一些在其他view中拿不到的信息
   - 具体看参考项目 SiwftUIDemos
+
+### 特殊的api
+  - UIViewRepresentable
+    - 它可以将UIKit封装成SwiftUI View: UIView, NSView, WKInterfaceObject
+    - [可以实现在SwiftUI里面预览UIKit页面](https://juejin.im/post/5dbbdd836fb9a0208a3a7d71)
+  - UIHostingController
+    - integrate SwiftUI views into a UIKit view hierarchy.
+    - 在UIKit里嵌入SwiftUI
+      - [Use SwiftUI in UIKit View Controllers with UIHostingController](https://medium.com/@max.codes/use-swiftui-in-uikit-view-controllers-with-uihostingcontroller-8fe68dfc523b)
 
 ### [EnvironmentObject](https://cloud.tencent.com/developer/article/1585679)
   - 突出强调**此数据将由某个外部实体提供**, 所以不需要再具体的地方初始化,而是由外部统一提供
