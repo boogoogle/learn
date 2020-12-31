@@ -25,6 +25,7 @@ INSERT INTO USER VALUES(NULL, "zhangsan", "123"), (NULL, "lisi","234");
 select * from user where username="" and password=""
 ```
 
+### [主键外键](https://www.liaoxuefeng.com/wiki/1177760294764384/1218728424164736)
 
 ### 
 - SQL注入问题:

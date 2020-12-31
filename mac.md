@@ -5,7 +5,7 @@
     - ctrl + 2  调度中心(缩小显示当前桌面打开的所有窗口)
     - CapsLock通过设置相当于cmd键
     - command+shift+G 在finder中快速进入某一个路径
-    - cmd + shif + f  切换Chrome全屏
+    - cmd + shif + f  切换Chrome全屏(全屏下显示标签页)
     - cmd + tab(→) 可以向右切换应用
       - cmd + tab唤出切换应用功能后, 按 cmd + ~ 可以向左切换
 

@@ -210,3 +210,12 @@
     - ` sudo pip3 install pipenv`
     - ` pipenv insatll` //将当前目录设置为虚拟环境
   - 参考自[这儿](https://blog.csdn.net/Hanniel/article/details/94294155)
+
+
+
+
+### Tips
+  - 替换pip3源为阿里云,不要用清华的,那个更新不及时
+    - `pip3 config set global.index-url https://mirrors.aliyun.com/pypi/simple`
+  - 有时候更新不及时,用默认源
+    - `pip3 install tensorflow-gpu -i https://pypi.org/simple`
