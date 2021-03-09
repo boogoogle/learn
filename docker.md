@@ -20,7 +20,12 @@
     - docker restart
   - 容器日志
     - docker logs container-id|container-name
-
+  - 实时查看docker容器日志
+      ```
+      $ sudo docker logs -f -t --tail 行数 容器名
+      例：实时查看docker容器名为s12的最后10行日志
+      $ sudo docker logs -f -t --tail 10 s12  
+      ```
 ### 运行一个 web 应用 & 端口映射
     - docker run -d -p 5000:5001 training/webapp python app.py
       - -d:让容器在后台运行。
