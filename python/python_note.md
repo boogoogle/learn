@@ -204,6 +204,10 @@
   - ` python3 -m venv venv `
   - ` source venv/bin/activate ` // 激活局部环境
 
+### 安装依赖
+`pip3 install gunicorn`
+or `python3 -m pip install gunicorn`
+
 ### pipenv
   - pipenv是唯一靠谱实用的python依赖管理工具
   - mac 安装
