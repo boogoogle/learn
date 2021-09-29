@@ -163,6 +163,7 @@
     - `isinstance(x, (int, float))`
   - raise 报错
     - raise TypeError('bad operand type')
+  - 判断数据类型 type(variable)
 
 ### IO编程
   - 打开文件, open(文件路径, 标识符)
