@@ -91,3 +91,23 @@
 	    ```
 	    docker run --name mysql101 -v /my/custom: /etc/nysql/conf.d -e xxxxx
 	    ```
+
+### 在镜像中使用git
+  - [使用 --mount指定挂载一个本地主机的目录到容器中 ](https://yeasy.gitbook.io/docker_practice/data_management/bind-mounts)
+  ```
+  docker run -d -P \
+    --name decode_git_repo \
+    --mount source=/Users/guoqiang/Desktop/decode_community,target=/boo_decode \
+    bitnami/git
+  ```
+  - 命令行太麻烦了,可以用docker的桌面系统直接点点点完成
+  - [需要在docker image中设置ssh](https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/GitHub-SSH-Key-Setup-Config-Ubuntu-Linux)
+
+
+
+### docker compose
+- 通过Compose, 使用YML文件来配置应用程序需要的**所有服务**,
+- 然后,使用**一个命令**, 可以从YML文件中**创建并启动**所有服务
+- 命令 `docker-compose up`
+  - `-d` 后台打开
+  - `-f` 指定文件
