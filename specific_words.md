@@ -33,6 +33,7 @@
 26. BRB = Be Right Back=马上回来
 27. LMK = Let Me Know=告诉我
 28. TBH = To Be Honest=坦白说
+29. BAT = business acceptance testing 指给reporter进行验收
 
 
 
@@ -55,4 +56,7 @@ Github代码提交中的一些缩写:
 - TL;DR: Too Long; Didn't Read. 太长懒得看。也有很多文档在做简略描述之前会写这么一句
 - TBD: To Be Done (or Defined/Discussed/Decided/Determined). 根据语境不同意义有所区别，但一般都是还没搞定的意思
 
-
+### 一些日常交流的俚语
+1. Yep
+    - yep，美国俚语，就是“是”的意思，和yes的意思差不多。
+    - yep 是俚语，意思与yup一样。使用yep、yup更加俏皮一些，适用于网络、通常会话中使用。

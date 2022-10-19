@@ -78,8 +78,14 @@ transfer 1ETH from on account to another, it costs 21,000 **gas units**
   - Allowance: the amount fo something that is permitted
     - we need a safe way to **pull** tokens out of someone's account.
     - this is where the **Approve and Transfer** flow comes in.
-      - 
 
+
+
+
+
+
+### WagmiConfig: 
+  - A *** collection of React Hooks *** containing everything you need to start working with Ethereum.
 
 
 
