@@ -89,3 +89,15 @@ transfer 1ETH from on account to another, it costs 21,000 **gas units**
 
 
 
+
+
+### Hardhat
+-  Connecting a wallet or Dapp to Hardhat Network
+```
+// run Hardhat Network in a standalone fashion
+npx hardhat node 
+
+```
+
+
+

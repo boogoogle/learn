@@ -34,6 +34,7 @@
 27. LMK = Let Me Know=告诉我
 28. TBH = To Be Honest=坦白说
 29. BAT = business acceptance testing 指给reporter进行验收
+30. UAT = User Acceptance Test 用户验收测试
 
 
 
