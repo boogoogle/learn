@@ -111,3 +111,18 @@
 - 命令 `docker-compose up`
   - `-d` 后台打开
   - `-f` 指定文件
+
+
+
+
+### 在docker中安装 vi
+
+```
+apt-get update
+
+// 如果其他两行不成功，就加上中间这两行
+#apt-get install apt-file
+#apt-file update
+
+apt-get install -y vim
+```
