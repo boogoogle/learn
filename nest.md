@@ -17,3 +17,10 @@ pm2
 ### CLuster Mode with PM2
 
 -
+
+## prisma with nest
+
+- install
+  - `npm install prisma --save-dev`
+- init
+  - `npx prisma init --datasource-provider sqlite`
