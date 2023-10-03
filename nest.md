@@ -24,3 +24,13 @@ pm2
   - `npm install prisma --save-dev`
 - init
   - `npx prisma init --datasource-provider sqlite`
+
+### cheat sheet
+
+```bash
+nest g module tabs --no-spec
+
+nest g resource [名称] 生成所有
+
+
+```
