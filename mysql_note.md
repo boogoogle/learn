@@ -84,4 +84,22 @@ select * from user where username="" and password=""
 
 
 
+
+## MySQL cheat sheet
+### DataType
+- char： 使用固定长度表示字符串，不足的话会在后面补空字符
+  - 定长，效率高
+  - 身份证，手机号，密码等
+- varchar： 不定长，效率偏低。
+
+- TODO： 一个汉字占用几个字符？
+  - 比如 “hello” 和 “高兴”分别占用几个字符，用 char(几)表示？
   
+
+
+### 插入中文报错
+  因为mysql默认使用的字符集不是uft8，需要手动更改， 执行如下命令
+``` 
+　　alter database databasename character set utf8;
+　　alter table tablename convert to character set utf8;
+```
