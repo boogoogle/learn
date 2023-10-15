@@ -1,5 +1,6 @@
 .DS_Store
 .cache
+.temp
 node_modules/*
 dist/*
 __pycache__

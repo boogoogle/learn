@@ -4,75 +4,72 @@ const fs =require('fs')
  */
 
 const resource = {
-  "scalperMinBalance": 1000,
-  "scalperHoldForDeposit": true,
-  "scalperNotAutoMatchIds": "",
-  "scalperAllowDisableCard": true,
-  "scalperDisableAllCards": true,
-  "scalperManualModeMultipleOrders": false,
-  "forceUserId": false,
-  "forceUserLevel": false,
-  "depositBlockTimeMin": 10,
-  "depositBlockCount": 3,
-  "depositLockCount": 10,
-  "depositSpeedyAmounts": "",
-  "depositParseName": false,
-  "depositParseComment": false,
-  "depositStrictTag": false,
-  "transferAutoAssign": true,
-  "transferAutoSplit": false,
-  "transferAutoSplitCount": 3,
-  "transferTimeout": 100,
-  "transferTimeoutSpeedy": 0,
-  "transferSmallTimeout": 2,
-  "transferSmallAmount": 0,
-  "transferMaxLimit": 0,
-  "transferFailOnScalperCancel": false,
-  "transferStrictTag": false,
-  "transferAllowRetry": true,
-  "withdrawalMaxLimit": 50000,
-  "withdrawalTimeout": 100,
-  "depositBankTimeout": 6,
-  "depositAliPayTimeout": 6,
-  "depositWechatTimeout": 30,
-  "depositUsdtTimeout": 60,
-  "phoneOrderTimeoutSec": 120,
-  "extraRate": 0,
-  "extraRateStartTime": "22:30",
-  "extraRateEndTime": "3:30",
-  "bankExtraRate": 0,
-  "bankExtraRateStartTime": "22:30",
-  "bankExtraRateEndTime": "03:30",
-  "runMobile": true,
-  "runQRCode": true,
-  "alipayCookie": "",
-  "usdtRate": null,
-  "usdtRateMarkup": 0.07,
-  "usdtWithdrawFeeTrc20": 2,
-  "strictTags": "DDYL,LEWAN,QIUYOUHUI,TOUHAOWANJIA,TANQIU,QIUMENGHUI,YYZF001",
-  "strictTransferTags": "DDYL,LEWAN,QIUYOUHUI,TOUHAOWANJIA,TANQIU,QIUMENGHUI,YYZF001",
-  "noDecimalPointMerchants": "",
-  "speedyMerchants": ""
+  "id": 177,
+  "no": "T231014202438xwwao",
+  "orderNo": "test231014_162212_59299610497015172444",
+  "scalperId": 483,
+  "scalperPhone": "CS015",
+  "coinAmount": null,
+  "coinRate": null,
+  "amount": 1,
+  "ip": "119.163.168.89",
+  "status": "pending",
+  "ethAddress": null,
+  "fundBankCard": null,
+  "bankName": null,
+  "cardNo": null,
+  "cardHolder": null,
+  "transferOrder": 111,//relation
+  "comment": "",
+  "actualCoinAmount": null,
+  "actualCoinRate": null,
+  "actualAmount": 1,
+  "manual": false,
+  "manuallyClosedBy": "",
+  "receiptUploaded": true,
+  "receipt2Uploaded": true,
+  "receipt3Uploaded": true,
+  "remark": "",
+  "createdDate": "2023-10-14T12:33:11Z",
+  "depositDate": "2023-10-14T12:33:11Z"
 }
 
 function transfer2DTO(resourceObj){
-  fs.writeFileSync('./result_dto.js', '') // 先清空
+  fs.writeFileSync('.temp/result_dto.js', '') // 先清空
 
   Object.keys(resourceObj).forEach(key=>{
     const v = resourceObj[key]
+    let [realyKey, desc, required] = key.split('=')
 
-    let _field = ['@StringField({ minLength: 1, maxLength: 16 })', 'string']
+    const requireStr = required ? '' : 'required :false'
+
+    desc = desc === undefined ? '' : desc
+
+
+
+    let _field = [`@StringField({ minLength: 0, maxLength: 16, ${requireStr} })`, 'string']
 
     if(typeof(v) === 'boolean') {
-      _field = ['@BooleanField()', 'boolean']
+      _field = [`@BooleanField({ ${requireStr}})`, 'boolean']
 
     } else if( typeof(v) === 'number') {
-      _field = ['@NumberField()', 'number']
+      _field = [`@NumberField({ ${requireStr}})`, 'number']
     }
 
-    const _str = `\n${_field[0]}\n${key}: ${_field[1]};\n`
+    const apiProperty = required 
+    ? `@ApiProperty({ description: '${desc}' })`
+    : `@ApiPropertyOptional({ description: '${desc}' })`
 
-    fs.writeFileSync('./result_dto.js', _str,{ 
+
+    const key_in_snake_case = chamel_to_snale(realyKey)
+
+    const _str = `
+    ${apiProperty}
+    ${_field[0]}
+    ${key_in_snake_case}: ${_field[1]};
+    `
+
+    fs.writeFileSync('.temp/result_dto.js', _str,{ 
       encoding:"utf8", 
       flag:"a+", 
       mode:0o666 
@@ -81,23 +78,30 @@ function transfer2DTO(resourceObj){
 }
 
 function transfer2Entity(resourceObj){
-  fs.writeFileSync('./result_entity.js', '') // 先清空
+  fs.writeFileSync('.temp/result_entity.js', '') // 先清空
 
   Object.keys(resourceObj).forEach(key=>{
     const v = resourceObj[key]
+    let [realyKey, desc, required] = key.split('=')
 
-    let _field = [`@Column({ type: 'varchar', length: 100, comment: 'unknown' })`, 'string']
+    desc = desc === undefined ? '' : desc
+
+
+    let _field = [`@Column({ type: 'varchar', length: 100, default: '', comment: '${desc}' })`, 'string']
 
     if(typeof(v) === 'boolean') {
-      _field = [`@Column({ type: 'boolean', default: false, comment: 'unknown' })`, 'boolean']
+      _field = [`@Column({ type: 'boolean', default: false, comment: '${desc}' })`, 'boolean']
 
     } else if( typeof(v) === 'number') {
-      _field = [`@Column({ type: 'int', default: 0, comment: 'unknown' })`, 'number']
+      _field = [`@Column({ type: 'int', default: 0, comment: '${desc}' })`, 'number']
     }
+    const key_in_snake_case = chamel_to_snale(realyKey)
 
-    const _str = `\n${_field[0]}\n${key}: ${_field[1]};\n`
+    const _str = `
+    ${_field[0]}
+    ${key_in_snake_case}: ${_field[1]};\n`
 
-    fs.writeFileSync('./result_entity.js', _str,{ 
+    fs.writeFileSync('.temp/result_entity.js', _str,{ 
       encoding:"utf8", 
       flag:"a+", 
       mode:0o666 
@@ -107,11 +111,34 @@ function transfer2Entity(resourceObj){
 
 
 function clean(){
-  fs.writeFileSync('./result_dto.js', '') // 先清空
-  fs.writeFileSync('./result_entity.js', '') // 先清空
+  fs.writeFileSync('.temp/result_dto.js', '') // 先清空
+  fs.writeFileSync('.temp/result_entity.js', '') // 先清空
 }
 
+function chamel_to_snale(littleCamelString){
+  if(!littleCamelString) {
+    return littleCamelString
+  }
+  let arr= littleCamelString.split('')
+  let _rst = ''
+  arr.forEach(ch=>{
+    // if(charCodeAt(ch) < 90) {
 
+    // }
+
+   if(ch >= 'A' && ch <= 'Z') {
+    _rst += '_' + ch.toLowerCase()
+   } else {
+    _rst += ch
+   }
+  })
+
+  return _rst
+
+}
+
+// transfer2DTO(resource)
 // transfer2Entity(resource)
-// clean()
+clean()
+
 
