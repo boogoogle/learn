@@ -95,4 +95,50 @@ nginx -v           #查看Nginx的版本号
         #     # try_files $uri /b/index.html;
         # }
 
+
+        root         /home/ec2-user/workshop/h5;
+
+        location / {
+            try_files $uri $uri/ /home/ec2-user/workshop/h5/index.html;
+        }
+
 ```
+
+### 一个反向代理并且 rewrite路径的例子
+```bash
+
+user ec2-user;
+worker_processes auto;
+error_log /var/log/nginx/error.log notice;
+pid /run/nginx.pid;
+http {
+    upstream backend_server { # 本地后段服务地址
+	    server	127.0.0.1:7001;
+    }
+
+    server {
+        listen       80;
+        listen       [::]:80;
+        server_name  54.169.249.20;
+
+        location / {
+    
+        root    /home/ec2-user/workshop/h5; # 纯静态前端dist地址
+        index	index.html index;
+            try_files $uri $uri/ index.html;
+        }
+
+        # 把前端的 /api/scalpers/user/login/captcha 转换成真实backend接口地址 /admin/h5/user/login/captcha
+        location /api/scalpers/ {
+            proxy_pass http://backend_server;		
+            rewrite ^\/api\/scalpers/(.*)$ /admin/h5/$1 break;
+            # 传入的url是 /api/scalpers/user/login/captcha
+            # $1 是/user/login/captcha
+            # 使用rewrite 替换/api/scalpers/为 /admin/h5/user/login/captcha
+        }
+    }
+  }
+
+```
+
+
