@@ -91,9 +91,15 @@ select * from user where username="" and password=""
   - 定长，效率高
   - 身份证，手机号，密码等
 - varchar： 不定长，效率偏低。
+- TIMESTAMP类型有专有的自动更新特性，这是啥？
+
+### 数值类型
+  - [参考这里吧](https://www.runoob.com/mysql/mysql-data-types.html)
 
 - TODO： 一个汉字占用几个字符？
   - 比如 “hello” 和 “高兴”分别占用几个字符，用 char(几)表示？
+- PRIMARY KEY关键字用于定义列为主键。 您可以使用多列来定义主键，列间以逗号分隔。
+  多个主键的应用场景是？ 好处和坏处？
   
 
 
@@ -103,3 +109,77 @@ select * from user where username="" and password=""
 　　alter database databasename character set utf8;
 　　alter table tablename convert to character set utf8;
 ```
+
+
+
+### 批量更新某个filed的值
+  ```SQL
+  -- 更新 order—_deposits 表里所有row的status 为 “created”
+  UPDATE order_deposits set `status` = "created";
+  ```
+
+
+### 常用命令：
+  - 连接 数据库：  `mysql -u root -p `
+  - 列出 数据库：`show databases;`
+  - 创建 数据库：  ` create database dbname;`
+  - 删除 数据库：  ` drop database dbname;`
+  - 选择 数据库：  ` use dbname;`
+  - 显示数据库信息 `desc dbname;`
+  - MySQL 创建数据表 `参考本文最前面`
+  - MySQL 删除数据表 `drop TABLE table_name`
+  - 查询数据,[参考](https://www.runoob.com/mysql/mysql-where-clause.html)
+    ```SQL
+    SELECT field1, field2,...fieldN FROM table_name1, table_name2...
+    [WHERE condition1 [AND [OR]] condition2.....
+    ```
+  - 更新数据
+  ```sql
+    UPDATE table_name SET field1=new-value1, field2=new-value2
+    [WHERE Clause]
+
+  -- 比如
+    update runoob_tbl 
+    set title='Jack Ma' 
+    where title='mayun';
+
+  ```
+  - 删除数据`DELETE FROM table_name [WHERE Clause]`
+  - like 子句
+    - 使用 where 只能精准获取指定的记录，比如 `where title='mayun'`
+    - 使用like字句中的%可以表示任意字符
+    ```sql
+    SELECT field1, field2,...fieldN 
+    FROM table_name
+    WHERE field1 LIKE condition1 [AND [OR]] filed2 = 'somevalue'
+  ```
+  - (UNION)[https://www.runoob.com/mysql/mysql-union-operation.html]
+    - 联合查询多个表，根据 ALL｜distinct 决定是否返回重复的字段
+  ```sql
+  SELECT title from runoob_tbl WHERE  title like '%remark'
+  UNION ALL 
+  select merchant from runoob_time
+  WHERE merchant='cook';
+
+  ORDER BY title desc -- 排序， 对所有返回结果进行排序
+
+  ```
+  - [ALTER](https://www.runoob.com/mysql/mysql-alter.html)
+    ```sql
+      ALTER table runoob_time
+      ADD country varchar(20) after id;  -- 在id列之后新增一列
+    ```
+
+  - [分组，貌似没啥用]
+  - [inner join, left join, right join](https://www.runoob.com/mysql/mysql-join.html)
+    - inner join
+      - 可以省略inner，只写join
+      - left join 
+      - right join
+  - [正则表达式]
+  - [索引]
+    - 索引是一种数据结构，用于**加快数据库查询**的速度和性能
+
+
+
+
