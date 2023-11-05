@@ -4,34 +4,31 @@ const fs =require('fs')
  */
 
 const resource = {
-  "id": 177,
-  "no": "T231014202438xwwao",
-  "orderNo": "test231014_162212_59299610497015172444",
-  "scalperId": 483,
-  "scalperPhone": "CS015",
-  "coinAmount": null,
-  "coinRate": null,
-  "amount": 1,
-  "ip": "119.163.168.89",
-  "status": "pending",
-  "ethAddress": null,
-  "fundBankCard": null,
-  "bankName": null,
-  "cardNo": null,
-  "cardHolder": null,
-  "transferOrder": 111,//relation
-  "comment": "",
-  "actualCoinAmount": null,
-  "actualCoinRate": null,
-  "actualAmount": 1,
-  "manual": false,
-  "manuallyClosedBy": "",
-  "receiptUploaded": true,
-  "receipt2Uploaded": true,
-  "receipt3Uploaded": true,
-  "remark": "",
-  "createdDate": "2023-10-14T12:33:11Z",
-  "depositDate": "2023-10-14T12:33:11Z"
+  "nickName": "",
+  "authorizedBalance": 0,
+  "alipayRate": 3.2,
+  "rate": 2.7,
+  "a2bRate": 3,
+  "wechatRate": 3,
+  "transferRate": 0,
+  "smallTransferRate": 0,
+  "minLimit": 1,
+  "maxLimit": 49999,
+  "minTransferLimit": 0,
+  "maxTransferLimit": 0,
+  "tags": "",
+  "qrCodeTags": "superadmin9527",
+  "transferTags": "",
+  "priority": 0,
+  "depositTimeout": 0,
+  "enabled": true,
+  "status": "started",
+  "allowTransfer": true,
+  "commissionMode": "",
+  "manualMode": true,
+  "holdForDeposit": true,
+  "enableGoogleAuth": "",
+  "remark": ""
 }
 
 function transfer2DTO(resourceObj){
@@ -109,6 +106,32 @@ function transfer2Entity(resourceObj){
   })
 }
 
+function superagentInitSql(resourceObj) {
+  fs.writeFileSync('.temp/result.sql', '') // 先清空
+
+  let str1 = 'INSERT INTO `app_users` (`username`,`password`, `invitationCode`'//
+
+  Object.keys(resourceObj).forEach(key => {
+    str1 +=  (',' + '`'  + key + '`')
+  })
+
+  str1 += ') VALUES ('
+
+  str1 += `'superadmin9527', '596bfe4bb02db60c2a25965598529e7e', '37339636'`
+
+  Object.keys(resourceObj).forEach(key => {
+    str1 +=  (',' + resourceObj[key])
+  })
+
+  str1 += ')'
+
+  fs.writeFileSync('.temp/result.sql', str1,{ 
+    encoding:"utf8", 
+    flag:"a+", 
+    mode:0o666 
+  })
+}
+
 
 function clean(){
   fs.writeFileSync('.temp/result_dto.js', '') // 先清空
@@ -136,9 +159,9 @@ function chamel_to_snale(littleCamelString){
   return _rst
 
 }
-
+superagentInitSql(resource)
 // transfer2DTO(resource)
 // transfer2Entity(resource)
-clean()
+// clean()
 
 
